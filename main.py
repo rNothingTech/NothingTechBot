@@ -1,6 +1,6 @@
 import praw, re, time, json
 import pandas as pd
-from datetime import date
+from datetime import date, datetime
 
 ### TO DO:
 # change "adbotest" subreddit
@@ -22,7 +22,7 @@ try:
     thanks_wiki_page_name = config.get('thanks_wiki_page')
     support_regex_match_wiki_page_name = config.get('support_regex_match_wiki_page')
     support_regex_exclude_wiki_page_name = config.get('support_regex_exclude_wiki_page')
-    print("Config read")
+    print(datetime.now().strftime("%m/%d/%Y %H:%M:%S") + " - config read")
 
   reddit = praw.Reddit(
     client_id = config_client_id,
@@ -44,12 +44,13 @@ try:
   support_match_patterns = support_regex_match_wiki_page.content_md.strip().split('\n')
   support_exclude_patterns = support_regex_exclude_wiki_page.content_md.strip().split('\n')
   
-  print("Init complete")
+  print(datetime.now().strftime("%m/%d/%Y %H:%M:%S") + " - init complete")
 except Exception as e:
-  print(f"Encountered an exception during startup: {e}")
+  print(datetime.now().strftime("%m/%d/%Y %H:%M:%S") + f" [ERROR] - encountered an exception during startup: {e}")
+  quit()
 
 def send_reply(response):
-  print(f"Sending reply: {response}")
+  print(datetime.now().strftime("%m/%d/%Y %H:%M:%S") + f" - Sending reply: {response}")
   footer = f"\n\n^(I'm a bot. Something wrong? Suggestions?) [^(Message the Mods)](https://www.reddit.com/message/compose?to=/r/{subreddit}&subject=Bot+feedback)"
   comment.reply(response + footer)
 
@@ -58,22 +59,22 @@ def handle_current_flair(user, new_points):
     user_flair_text = None
     # check if they have an existing flair and find the flair text
     for flair in subreddit.flair(user):
-        print("Found user's existing flair")
+        print(datetime.now().strftime("%m/%d/%Y %H:%M:%S") + " - found user's existing flair")
         if flair["flair_text"] is not None:
             user_flair_text = flair["flair_text"]
-            print(f"Existing flair text is {user_flair_text}")
+            print(datetime.now().strftime("%m/%d/%Y %H:%M:%S") + f" - existing flair text is {user_flair_text}")
             break
     # if their flair text is nothing
     if not user_flair_text:
-        print("No flair set yet")
+        print(datetime.now().strftime("%m/%d/%Y %H:%M:%S") + " - no flair set yet")
         user_flair_text = f"★ {new_points}"
     # if a star already exists in the flair, increment the thanks count
     elif str("★") in user_flair_text:
         cur_points = int(user_flair_text.split(" ")[-1])
-        print(f"Thanks flair set, incrementing {str(cur_points)} to {str(new_points)}")
+        print(datetime.now().strftime("%m/%d/%Y %H:%M:%S") + f" - thanks flair set, incrementing {str(cur_points)} to {str(new_points)}")
         user_flair_text = user_flair_text.replace(str(cur_points), str(new_points))
     else:
-        print("Custom flair detected")
+        print(datetime.now().strftime("%m/%d/%Y %H:%M:%S") + " - custom flair detected")
         user_flair_text = "custom"
         # # Check if user's custom flair already has a star
         # if any(char == "★" for char in user_flair_text):
@@ -95,12 +96,12 @@ def set_flair(user_flair_text):
     if user_flair_text == "custom":
         response = f"Thanks for u/{user} registered. They now have {str(points)} {point_text}! However, this user has a custom flair so their level is not displayed."
         send_reply(response)
-        print("Custom flair, thanks not added")
+        print(datetime.now().strftime("%m/%d/%Y %H:%M:%S") + " - custom flair, thanks not added")
     else:
         subreddit.flair.set(user, text=user_flair_text, flair_template_id=None)
         response = f"Thanks for u/{user} registered. They now have {str(points)} {point_text}!"
         send_reply(response)
-        print("Thanks added")
+        print(datetime.now().strftime("%m/%d/%Y %H:%M:%S") + " - thanks added")
 
 # extract the numeric value from the Level column
 def get_level_num(level):
@@ -132,7 +133,7 @@ def set_wiki_leaderboard(df, user_exists_in_leaderboard, user, points):
         df.loc[df["Username"] == user, "Level"] = f"★ {points}"
         df.loc[df["Username"] == user, "Last Star Date"] = today.strftime("%Y-%m-%d")
     else:
-        print("User not located in table")
+        print(datetime.now().strftime("%m/%d/%Y %H:%M:%S") + " - user not located in table")
         new_row = {
             "Username": user,
             "Level": f"★ {points}",
@@ -158,12 +159,12 @@ def thank_user(user):
   df = get_wiki_leaderboard()
   user_exists_in_leaderboard = df[df["Username"] == f"u/{user}"]
   if not user_exists_in_leaderboard.empty:
-      print(f"User: {user} exists in leaderboard, so incrementing existing points")
+      print(datetime.now().strftime("%m/%d/%Y %H:%M:%S") + f" - user: {user} exists in leaderboard, so incrementing existing points")
       level = user_exists_in_leaderboard["Level"].iloc[0]
       last_star_date = user_exists_in_leaderboard["Last Star Date"].iloc[0]
       points = int(level.split(" ")[-1]) + 1
   else:
-      print(f"User: {user} doesn't exist in leaderboard, so points = 1")
+      print(datetime.now().strftime("%m/%d/%Y %H:%M:%S") + f" - user: {user} doesn't exist in leaderboard, so points = 1")
       points = 1
   user_flair_text = handle_current_flair(user, points)
   set_wiki_leaderboard(df, not user_exists_in_leaderboard.empty, user, points)
@@ -173,7 +174,7 @@ while True:
   try:
     # for all comments in the subreddit
     for comment in subreddit.stream.comments(skip_existing=True):
-        print("Found comment in subreddit")
+        print(datetime.now().strftime("%m/%d/%Y %H:%M:%S") + " - found comment in subreddit")
         # check if the comment is the bot's
         if comment.author.name == reddit.user.me():
           continue
@@ -182,7 +183,7 @@ while True:
         if comment.submission.link_flair_template_id == support_flair_template_id and comment.author == comment.submission.author and any(re.search(pattern, comment.body, re.IGNORECASE) for pattern in support_match_patterns):
           # check if the comment body does not match any of the excluded patterns
           if not any(re.search(pattern, comment.body, re.IGNORECASE) for pattern in support_exclude_patterns):
-            print(f"Matched: {comment.body} by {comment.author}")
+            print(datetime.now().strftime("%m/%d/%Y %H:%M:%S") + f" - matched: {comment.body} by {comment.author}")
             response = f"It seems like you might've resolved your issue. If so, please update the flair to 'Solved' or reply !solved\n\nIf you'd like to thank anyone for helping you, reply !thanks to *their* comment."
             send_reply(response)
       
@@ -190,19 +191,19 @@ while True:
         if "!thanks" in comment.body.lower():
           # check if the author is a mod
           if comment.author in moderators:
-              print(f"!thanks giver is a mod: {comment.author.name} in {comment.submission.id}")
+              print(datetime.now().strftime("%m/%d/%Y %H:%M:%S") + f" - !thanks giver is a mod: {comment.author.name} in {comment.submission.id}")
               user = reddit.redditor(comment.parent().author.name)
               thank_user(user)
       
           # check if the submission flair ID = "Support" or "Solved" and that the comment is from OP
           elif (comment.submission.link_flair_template_id == support_flair_template_id or comment.submission.link_flair_template_id == solved_flair_template_id) and comment.author == comment.submission.author:
               user = reddit.redditor(comment.parent().author.name)
-              print(f"Found applicable !thanks from {comment.author}")
+              print(datetime.now().strftime("%m/%d/%Y %H:%M:%S") + f" - found applicable !thanks from {comment.author}")
               has_been_thanked = False
 
               # check if the comment author is the same as the parent comment author, OP is replying to themselves
               if comment.parent().author == comment.author:
-                  print("OP is replying to themselves")
+                  print(datetime.now().strftime("%m/%d/%Y %H:%M:%S") + " - OP is replying to themselves")
                   response = f"You can't thank yourself."
                   send_reply(response)
                   continue
@@ -211,7 +212,7 @@ while True:
               if comment.parent().author.name == reddit.user.me():
                   response = f"Aw, thanks u/{comment.author.name}"
                   send_reply(response)
-                  print("User thanked bot")
+                  print(datetime.now().strftime("%m/%d/%Y %H:%M:%S") + " - user thanked bot")
                   continue
               # get the parent replies to the !thanks to check if they already thanked this comment
               # for parent_reply in comment.parent().replies:
@@ -229,7 +230,7 @@ while True:
               # get all comments in the thread to check if thanks has already been given to this user
               submission = comment.submission
               submission.comments.replace_more(limit=None)
-              print(f"Checking all comments in thread {comment.submission.id}")
+              print(datetime.now().strftime("%m/%d/%Y %H:%M:%S") + f" - checking all comments in thread {comment.submission.id}")
               for comment_in_submission in submission.comments.list():
                 # check for !thanks from OP
                 if "!thanks" in comment_in_submission.body.lower() and comment_in_submission.author == comment.submission.author:
@@ -238,11 +239,11 @@ while True:
                   # if thanked user is the same as the newly thanked user
                   if previously_thanked_user == user:
                     for child_reply in comment_in_submission.replies:
-                      print(f"Found !thanks for {previously_thanked_user} - checking if has been thanked")
+                      print(datetime.now().strftime("%m/%d/%Y %H:%M:%S") + f" - found !thanks for {previously_thanked_user} - checking if has been thanked")
                       # check if there is already a thanks registered by the bot
                       if child_reply.author == reddit.user.me() and re.search(r"Thanks for .* registered\.", child_reply.body):
                           has_been_thanked = True
-                          print("!thanks already given in this thread")
+                          print(datetime.now().strftime("%m/%d/%Y %H:%M:%S") + " - !thanks already given in this thread")
                           break
                   if has_been_thanked:
                       break
@@ -253,18 +254,18 @@ while True:
               else:
                   response = f"You can only thank someone once per thread."
                   send_reply(response)
-                  print("Thanks not added as OP already thanked this user in this thread.")
+                  print(datetime.now().strftime("%m/%d/%Y %H:%M:%S") + " - thanks not added as OP already thanked this user in this thread.")
 
         # check for !solved in the body of a comment from OP or a mod of a "Support" flaired submission
         if "!solved" in comment.body.lower() and comment.submission.link_flair_template_id == support_flair_template_id and (comment.author == comment.submission.author or comment.author in moderators):
-          print("!solved found, changing flair")
+          print(datetime.now().strftime("%m/%d/%Y %H:%M:%S") + " - !solved found, changing flair")
           comment.submission.flair.select(solved_flair_template_id)
           response = f"Thanks, I've marked your thread as solved. If this is incorrect, please revert the flair back to 'Support'.\n\nIf you'd like to thank anyone for helping you, reply !thanks to *their* comment."
           send_reply(response)
 
   except praw.exceptions.APIException as e:
-    print(f"Encountered an API exception: {e}")
+    print(datetime.now().strftime("%m/%d/%Y %H:%M:%S") + f" [ERROR] - encountered an API exception: {e}")
     time.sleep(retry_delay)
   except Exception as e:
-    print(f"Encountered an exception: {e}")
+    print(datetime.now().strftime("%m/%d/%Y %H:%M:%S") + f" [ERROR] - encountered an exception: {e}")
     time.sleep(retry_delay)
