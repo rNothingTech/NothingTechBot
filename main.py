@@ -69,7 +69,7 @@ try:
   
   logger.info("Init complete")
 except Exception as e:
-  logger.error("Encountered an exception during startup: {e}")
+  logger.error(f"Encountered an exception during startup: {e}")
   quit()
 
 def send_reply(response):
