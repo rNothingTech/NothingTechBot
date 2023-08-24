@@ -231,7 +231,7 @@ while True:
           if comment.author in moderators:
               logger.info(f"!thanks giver is a mod: {comment.author.name} in {comment.submission.id}")
               user = reddit.redditor(comment.parent().author.name)
-              thank_user(user)
+              #thank_user(user)
       
           # check if the submission flair ID = "Support" or "Solved" and that the comment is from OP
           elif (comment.submission.link_flair_template_id == support_flair_template_id or comment.submission.link_flair_template_id == solved_flair_template_id) and comment.author == comment.submission.author:
@@ -283,7 +283,7 @@ while True:
                   
               # if they haven't already been thanked
               if not has_been_thanked:
-                  thank_user(user)
+                  #thank_user(user)
               else:
                   response = f"You can only thank someone once per thread."
                   send_reply(response)
@@ -293,7 +293,7 @@ while True:
         if "!solved" in comment.body.lower() and comment.submission.link_flair_template_id == support_flair_template_id and (comment.author == comment.submission.author or comment.author in moderators):
           logger.info("!solved found, changing flair")
           comment.submission.flair.select(solved_flair_template_id)
-          response = f"Thanks, I've marked your thread as solved. If this is incorrect, please revert the flair back to 'Support'.\n\nIf you'd like to thank anyone for helping you, reply `!thanks` to *their* comment."
+          response = f"Thanks, I've marked your thread as solved. If this is incorrect, please revert the flair back to 'Support'.\n\n" #If you'd like to thank anyone for helping you, reply `!thanks` to *their* comment.
           send_reply(response)
 
         # check for !support in the body of a comment and respond with support links
