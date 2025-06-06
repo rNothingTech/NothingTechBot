@@ -1,0 +1,122 @@
+{
+    "link": [
+        {
+            "aliases": ["phone (1)", "phone 1", "phone1", "phone(1)"],
+            "link": "https://nothing.tech/pages/phone-1"
+        },
+        {
+            "aliases": ["phone (2)", "phone 2", "phone2", "phone(2)"],
+            "link": "https://nothing.tech/pages/phone-2"
+        },
+        {
+            "aliases": ["phone (2a)", "phone 2a", "phone2a", "phone(2a)"],
+            "link": "https://nothing.tech/pages/phone-2a"
+        },
+        {
+            "aliases": ["phone (2a) plus", "phone 2a plus", "phone2aplus", "phone(2a)plus", "phone (2a plus)"],
+            "link": "https://nothing.tech/pages/phone-2a-plus"
+        },
+        {
+            "aliases": ["phone (3a)", "phone 3a", "phone3a", "phone(3a)"],
+            "link": "https://nothing.tech/pages/phone-3a"
+        },
+        {
+            "aliases": ["phone (3a) pro", "phone 3a pro", "phone3apro", "phone(3a)pro", "phone (3a pro)"],
+            "link": "https://nothing.tech/pages/phone-3a-pro"
+        },
+        {
+            "aliases": ["ear (1)", "ear 1", "ear1", "ear(1)"],
+            "link": "https://nothing.tech/products/ear-1"
+        },
+        {
+            "aliases": ["ear (2)", "ear 2", "ear2", "ear(2)"],
+            "link": "https://nothing.tech/products/ear-2"
+        },
+        {
+            "aliases": ["ear (stick)", "ear stick", "earstick", "ear(stick)"],
+            "link": "https://nothing.tech/products/ear-stick"
+        },
+        {
+            "aliases": ["ear (open)", "ear open", "earopen", "ear(open)"],
+            "link": "https://nothing.tech/products/ear-open"
+        },
+        {
+            "aliases": ["ear", "ear (2024)", "ear 2024"],
+            "link": "https://nothing.tech/products/ear"
+        },
+        {
+            "aliases": ["beer (5.1%)", "beer", "beer (5.1)", "beer (1)"],
+            "link": "https://nothing.tech/pages/beer"
+        },
+        {
+            "aliases": ["community", "nothing.community", "nothing community", "forum"],
+            "link": "https://nothing.community"
+        },
+        {
+            "aliases": ["website", "nothing.tech", "nothing", "nothing tech"],
+            "link": "https://nothing.tech"
+        },
+        {
+            "aliases": ["discord", "official discord", "discord server"],
+            "link": "https://discord.gg/nothingtech"
+        },
+        {
+            "aliases": ["wiki", "reddit wiki", "r/NothingTech wiki", "NothingTech wiki"],
+            "link": "https://reddit.com/r/NothingTech/wiki"
+        }
+    ],
+    "wiki": [
+        {
+            "aliases": ["nothing os", "nothingos", "nothing-os", "nos", "nothing os faq", "os faq", "os", "nos faq", "nothingos faq", "faq os", "faq nothing os", "faq nothingos"],
+            "link": "https://www.reddit.com/r/NothingTech/wiki/faq/nothing-os"
+        },
+        {
+            "aliases": ["phone", "nothing phone", "phone faq", "faq phone"],
+            "link": "https://www.reddit.com/r/NothingTech/wiki/faq/phone"
+        },
+        {
+            "aliases": ["ear", "audio", "buds", "ear faq", "buds faq", "earbuds", "earbuds faq", "ear buds", "ear buds faq"],
+            "link": "https://www.reddit.com/r/NothingTech/wiki/faq/phone"
+        },
+        {
+            "aliases": ["reddit", "subreddit", "r/NothingTech", "nothing reddit", "nothing subreddit"],
+            "link": "https://www.reddit.com/r/NothingTech/wiki/faq/reddit"
+        },
+        {
+            "aliases": ["faq", "questions", "frequently asked questions", "frequent questions"],
+            "link": "https://www.reddit.com/r/NothingTech/wiki/faq"
+        },
+        {
+            "aliases": ["devices", "list devices", "list of devices", "models", "phones", "phone models", "ear models", "pokemon", "products", "product names", "codenames", "product codenames"],
+            "link": "https://www.reddit.com/r/NothingTech/wiki/library/devices/"
+        },
+        {
+            "aliases": ["links", "official links", "socials", "social links", "support", "support links"],
+            "link": "https://www.reddit.com/r/NothingTech/wiki/library/official-links/"
+        },
+        {
+            "aliases": ["apps", "official apps", "nothing apps", "icon pack", "nothing icon pack", "icons", "widgets", "community widgets", "gallery", "weather", "glyph composer"],
+            "link": "https://www.reddit.com/r/NothingTech/wiki/library/official-apps/"
+        },
+        {
+            "aliases": ["community apps", "custom apps", "unofficial apps"],
+            "link": "https://www.reddit.com/r/NothingTech/wiki/library/community-apps/"
+        },
+        {
+            "aliases": ["glyph tools", "custom glyph", "custom ringtones", "glyph maker", "glyph creator"],
+            "link": "https://www.reddit.com/r/NothingTech/wiki/library/glyph-tools"
+        },
+        {
+            "aliases": ["community projects", "community creations", "community links", "unofficial projects", "unofficial links"],
+            "link": "https://www.reddit.com/r/NothingTech/wiki/library/community-projects/"
+        },
+        {
+            "aliases": ["library", "resource library", "lib"],
+            "link": "https://www.reddit.com/r/NothingTech/wiki/library/"
+        },
+        {
+            "aliases": ["megathreads", "megathread", "megathread archive", "megathread directory", "mega threads"],
+            "link": "https://www.reddit.com/r/NothingTech/wiki/megathreads/"
+        }        
+    ]
+}

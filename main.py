@@ -1,6 +1,5 @@
-import praw, re, time, json, logging, urllib3, traceback
-import pandas as pd
-from datetime import date, datetime
+import praw, re, time, json, logging, traceback, configparser, difflib
+from datetime import date
 
 #init
 try:
@@ -14,9 +13,7 @@ try:
     subreddit_name = config.get('subreddit')
     support_flair_template_id = config.get('support_flair_template_id')
     solved_flair_template_id = config.get('solved_flair_template_id')
-    thanks_wiki_page_name = config.get('thanks_wiki_page')
-    support_regex_match_wiki_page_name = config.get('support_regex_match_wiki_page')
-    support_regex_exclude_wiki_page_name = config.get('support_regex_exclude_wiki_page')
+    bot_config_wiki_page = config.get('bot_config_wiki_page')
     bool_send_response = config.get('bool_send_response')
     log_level_terminal = config.get('log_level_terminal')
     log_level_file = config.get('log_level_file')
@@ -33,11 +30,12 @@ try:
 
     logger.debug("Config read")
 
-    twofa = input("Please provide 2FA token\n")
-    print("Read:", twofa.rstrip())
+    if config.get('twofa_enabled'):
+      twofa = input("Please provide 2FA token\n")
+      print("twofa enabled. Read:", twofa.rstrip())
 
-    if twofa:
-       reddit_password = reddit_password + ":" + twofa.rstrip()
+      if twofa:
+        reddit_password = reddit_password + ":" + twofa.rstrip()
 
   reddit = praw.Reddit(
     client_id = config_client_id,
@@ -57,11 +55,13 @@ try:
   subreddit = reddit.subreddit(subreddit_name)
   moderators = subreddit.moderator()
   
-  thanks_wiki_page = subreddit.wiki[thanks_wiki_page_name]
-  thanks_wiki_contents = thanks_wiki_page.content_md
-  
-  support_regex_match_wiki_page = subreddit.wiki[support_regex_match_wiki_page_name]
-  support_regex_exclude_wiki_page = subreddit.wiki[support_regex_exclude_wiki_page_name]
+  config_wiki_page = subreddit.wiki[bot_config_wiki_page].content_md.strip()
+  config_parser = configparser.ConfigParser()
+  config_parser.read_string(config_wiki_page)
+  config_wiki = config_parser['bot']
+
+  support_regex_match_wiki_page = subreddit.wiki[config_wiki['support_regex_match_wiki_page_name']]
+  support_regex_exclude_wiki_page = subreddit.wiki[config_wiki['support_regex_exclude_wiki_page_name']]
   support_match_patterns = support_regex_match_wiki_page.content_md.strip().split('\n')
   support_exclude_patterns = support_regex_exclude_wiki_page.content_md.strip().split('\n')
   
@@ -73,132 +73,51 @@ except Exception as e:
 def send_reply(response):
   if bool_send_response:
     logger.debug(f"Sending reply: {response}")
-    footer = f"\n\n^(I'm a bot. Something wrong? Suggestions?) [^(Message the Mods)](https://www.reddit.com/message/compose?to=/r/{subreddit}&subject=Bot+feedback)"
-    comment.reply(response + footer)
+    comment.reply(response + '\n\n' + config_wiki['footer'])
   else:
     logger.info("Reply not sent as bool_send_response is false.")
     logger.info(f"Reply would've been: {response}")
 
-# check if they have a flair; if it's a star flair or a custom one
-def handle_current_flair(user, new_points):
-    user_flair_text = None
-    # check if they have an existing flair and find the flair text
-    for flair in subreddit.flair(user):
-        logger.info("Found user's existing flair")
-        if flair["flair_text"]:
-            user_flair_text = flair["flair_text"]
-            logger.debug(f"Existing flair text is {user_flair_text.replace('★ ', '')}")
-            break
-    # if their flair text is nothing
-    if not user_flair_text:
-        logger.debug("No flair set yet")
-        user_flair_text = f"★ {new_points}"
-    # if a star already exists in the flair, increment the thanks count
-    elif str("★") in user_flair_text:
-        cur_points = int(user_flair_text.split(" ")[-1])
-        logger.info(f"Thanks flair set, incrementing {str(cur_points)} to {str(new_points)}")
-        user_flair_text = user_flair_text.replace(str(cur_points), str(new_points))
-    else:
-        logger.debug("Custom flair detected")
-        user_flair_text = "custom"
-        # # Check if user's custom flair already has a star
-        # if any(char == "★" for char in user_flair_text):
-        #     # Extract the current points value
-        #     points = int(user_flair_text.split()[-1])
-        #     print(f"Custom flair set, incrementing {str(points)}")
-        #     # Append the new points value to the user's existing flair
-        #     user_flair_text = user_flair_text.replace(str(points), str(points + 1))
-        # else:
-        #     # Append the star and points to the user's existing flair
-        #     print("Custom flair set, appending thanks to 1")
-        #     user_flair_text += " | ★ 1"
-    return user_flair_text
+def link_commands(type, search_data):
+  startidx = body.find(f"!{type}") + len(f"!{type}")
+  endidx = body.find("\n", startidx)
+  argument = body[startidx:endidx].strip() if endidx != -1 else body[startidx:].strip()
+  if type == "link" and ("ear" in argument or "phone" in argument):
+    argument = argument.replace("nothing", "") #remove "nothing" from phone and ear searches
+  logger.info(f"!{type} request for {argument} found")
+  
+  returned_link = None
+  alt_aliases = []
 
-# set flair if not custom
-def set_flair(user_flair_text, points):
-    point_text = "point" if points == "1" else "points"
-    if user_flair_text == "custom":
-        response = f"Thanks for u/{user} registered. They now have {str(points)} {point_text}! However, this user has another flair so their level is not displayed."
-        send_reply(response)
-        logger.info("Custom flair set, thanks not added to flair")
-    else:
-        subreddit.flair.set(user, text=user_flair_text, flair_template_id=None)
-        response = f"Thanks for u/{user} registered. They now have {str(points)} {point_text}!"
-        send_reply(response)
-        logger.debug("Thanks added to flair")
+  for search in search_data:
+    alt_aliases.extend(search["aliases"])
+    if argument in [alias for alias in search["aliases"]]:
+      returned_link = search["link"]
+      break
 
-# extract the numeric value from the Level column
-def get_level_num(level):
-    if isinstance(level, str):
-        level_num = level.split(" ")[-1]
-        if level_num.isdigit():
-            return int(level_num)
-    return None
-
-# get the wiki leaderboard
-def get_wiki_leaderboard():
-    # split markdown table string into rows
-    rows = thanks_wiki_contents.strip().split("\n")[4:]
-    # split each row into cells
-    cells = [[cell.strip() for cell in row.split("|")[1:-1]] for row in rows]
-    # create a pandas DataFrame from cells
-    df = pd.DataFrame(cells, columns=["Username", "Level", "Last Star Date"])
-    # convert 'Last Star Date' column to datetime type
-    df["Last Star Date"] = pd.to_datetime(df["Last Star Date"]).dt.date
-
-    return df
-
-# set the wiki leaderboard, update or add user, level and date
-def set_wiki_leaderboard(df, user_exists_in_leaderboard, user, points):
-    user = f"u/{user}"
-    today = date.today()
-    if user_exists_in_leaderboard:
-        logger.debug("User located in table, updating existing row")
-        # update the level and date cells on the row matching the username
-        df.loc[df["Username"] == user, "Level"] = f"★ {points}"
-        df.loc[df["Username"] == user, "Last Star Date"] = today.strftime("%Y-%m-%d")
-    else:
-        logger.debug("User not located in table, adding")
-        new_row = {
-            "Username": user,
-            "Level": f"★ {points}",
-            "Last Star Date": today.strftime("%Y-%m-%d"),
-        }
-        df.loc[len(df)] = new_row
-
-    # apply the function to create a new column with the numeric value of the Level column
-    df["Level Num"] = df["Level"].apply(get_level_num)
-    # sort the DataFrame by the Level Num column
-    df = df.sort_values(by=["Level Num", "Last Star Date"], ascending=[False, True])
-    # remove the Level Num column
-    df = df.drop("Level Num", axis=1)
-    # convert DataFrame back to markdown
-    markdown_table = (
-        f"This page is updated by a robot. Do not edit. *Last update*: {today.strftime('%Y-%m-%d')}\n\n" + df.to_markdown(index=False)
-    )
-    # overwrite subreddit wiki page with new markdown
-    subreddit.wiki[thanks_wiki_page_name].edit(content=markdown_table)
-
-# perform actions to thank - get wiki points, handle flair, set flair, set leaderboard
-def thank_user(user):
-  df = get_wiki_leaderboard()
-  user_exists_in_leaderboard = df[df["Username"] == f"u/{user}"]
-  if not user_exists_in_leaderboard.empty:
-      logger.debug(f"User: {user} exists in leaderboard, so incrementing existing points")
-      level = user_exists_in_leaderboard["Level"].iloc[0]
-      last_star_date = user_exists_in_leaderboard["Last Star Date"].iloc[0]
-      points = int(level.split(" ")[-1]) + 1
+  if returned_link:
+    return f"Here's the link for `{argument}`: {returned_link}"
   else:
-      logger.debug(f"User: {user} doesn't exist in leaderboard, so points = 1")
-      points = 1
-  user_flair_text = handle_current_flair(user, points)
-  set_wiki_leaderboard(df, not user_exists_in_leaderboard.empty, user, points)
-  set_flair(user_flair_text, points)
+    suggestions = difflib.get_close_matches(argument, [a for a in alt_aliases], n=3, cutoff=0.6)
+    if suggestions:
+      suggestion_lines = []
+      for suggestion in suggestions:
+        for search in search_data:
+          if suggestion in search["aliases"]:
+            suggestion_lines.append(f"* `{suggestion}`: {search["link"]}")
+            break
+      
+      suggestion_block = "\n".join(suggestion_lines)
+      return f"I couldn't an exact match for `{argument}`. Did you mean any of the following?\n\n{suggestion_block}"
+    else:
+      return f"I couldn't find a link for `{argument}` and no similar matches were found. If you think this is wrong, contact the mods."
+
 
 while True:
   try:
     # for all comments in the subreddit
     for comment in subreddit.stream.comments(skip_existing=True):
+        body = comment.body.lower()
         file_handler = logging.FileHandler(f'logs-{today.strftime("%Y-%m-%d")}.log')
         logger.info(f"Found comment in {subreddit}, {comment.id} in {comment.submission.id}")
         logger.debug(f"Comment from {comment.author}: {comment.body}")
@@ -206,102 +125,37 @@ while True:
         if comment.author.name == reddit.user.me():
           continue
       
-        # check if the comment body matches any of the match patterns if the flair ID = "Support" and the comment is from OP
-        if comment.submission.link_flair_template_id == support_flair_template_id and comment.author == comment.submission.author:
-          matched_pattern = None
-          for pattern in support_match_patterns:
-            match = re.search(pattern, comment.body, re.IGNORECASE)
-            if match:
-                matched_pattern = pattern
-                logger.debug(f"Comment matched solved pattern: {matched_pattern}")
-                break
-          
-          if matched_pattern is not None:
-            # check if the comment body does not match any of the excluded patterns
-            if not any(re.search(pattern, comment.body, re.IGNORECASE) for pattern in support_exclude_patterns):
-              logger.info("Comment matched potential solved regex, so prompting to mark as solved")
-              response = f"It seems like you might've resolved your issue. If so, please update the flair to 'Solved' or reply `!solved`"#\n\nIf you'd like to thank anyone for helping you, reply `!thanks` to *their* comment."
-              send_reply(response)
-            else:
-               logger.debug("Comment matched exclude regex, so not responding")
-      
-        # check for !thanks in the body
-        if "!thanks" in comment.body.lower():
-          # check if the author is a mod
-          if comment.author in moderators:
-              logger.info(f"!thanks giver is a mod: {comment.author.name} in {comment.submission.id}")
-              user = reddit.redditor(comment.parent().author.name)
-              #thank_user(user)
-      
-          # check if the submission flair ID = "Support" or "Solved" and that the comment is from OP
-          elif (comment.submission.link_flair_template_id == support_flair_template_id or comment.submission.link_flair_template_id == solved_flair_template_id) and comment.author == comment.submission.author:
-              user = reddit.redditor(comment.parent().author.name)
-              logger.info(f"Found applicable !thanks from {comment.author} in {comment.submission.id}")
-              has_been_thanked = False
-
-              # check if the comment author is the same as the parent comment author, OP is replying to themselves
-              if comment.parent().author == comment.author:
-                logger.info("OP is replying to themselves")
-                response = f"You can't thank yourself."
-                send_reply(response)
-                continue
-              
-              # check if the parent comment author is the bot
-              if comment.parent().author.name == reddit.user.me():
-                logger.info("User thanked bot")
-                response = f"Aw, thanks u/{comment.author.name}"
-                send_reply(response)
-                continue
-              
-              # check if the parent comment author is AutoModerator
-              if comment.parent().author.name == "AutoModerator":
-                logger.info("User tried to thank AutoMod.")
-                response = f"Thanks for using the !thanks feature but you can't thank AutoModerator."
-                send_reply(response)
-                continue
-            
-              # get all comments in the thread to check if thanks has already been given to this user
-              submission = comment.submission
-              submission.comments.replace_more(limit=None)
-              logger.debug(f"Checking all comments in thread {comment.submission.id}")
-              for comment_in_submission in submission.comments.list():
-                # check for !thanks from OP
-                if "!thanks" in comment_in_submission.body.lower() and comment_in_submission.author == comment.submission.author:
-                  # get the user who has already been thanked
-                  previously_thanked_user = comment_in_submission.parent().author
-                  # if thanked user is the same as the newly thanked user
-                  if previously_thanked_user == user:
-                    for child_reply in comment_in_submission.replies:
-                      logger.info(f"Found !thanks for {previously_thanked_user} - checking if has been thanked")
-                      # check if there is already a thanks registered by the bot
-                      if child_reply.author == reddit.user.me() and re.search(r"Thanks for .* registered\.", child_reply.body):
-                          has_been_thanked = True
-                          logger.info("!thanks already given in this thread")
-                          break
-                  if has_been_thanked:
-                      break
-                  
-              # if they haven't already been thanked
-              if not has_been_thanked:
-                 logger.info("Doing nothing.")
-                  #thank_user(user)
-              else:
-                  response = f"You can only thank someone once per thread."
-                  send_reply(response)
-                  logger.info(f"Thanks not added as OP already thanked this user in this thread.")
-
-        # check for !solved in the body of a comment from OP or a mod of a "Support" flaired submission
-        if "!solved" in comment.body.lower() and comment.submission.link_flair_template_id == support_flair_template_id and (comment.author == comment.submission.author or comment.author in moderators):
+        # check for !solved in the body of a comment from OP or a mod of a submission
+        if "!solved" in body and (comment.author == comment.submission.author or comment.author in moderators):
           logger.info("!solved found, changing flair")
           comment.submission.flair.select(solved_flair_template_id)
-          response = f"Thanks, I've marked your thread as solved. If this is incorrect, please revert the flair back to 'Support'."#\n\n If you'd like to thank anyone for helping you, reply `!thanks` to *their* comment."
-          send_reply(response)
+          send_reply(config_wiki['solved_response'])
 
         # check for !support in the body of a comment and respond with support links
-        if "!support" in comment.body.lower():
+        if "!support" in body:
           logger.info("!support found, responding with support links")
           response = f"u/{comment.parent().author.name}, here's how to get in touch with Nothing support:\n\n* Visit the [Nothing Support Centre](https://nothing.tech/pages/support-centre) and press the blue chat icon for live chat support (region and time dependent).\n* Visit the [Nothing Customer Support](https://nothing.tech/pages/contact-support) page to get in contact via web form.\n* Contact [\@NothingSupport on X](https://x.com/NothingSupport)."
           send_reply(response)
+
+        if "!link" in body:
+          with open("commands.json", "r") as j:
+            json_data = json.load(j)
+            search_data = json_data["link"]
+
+          response = link_commands("link", search_data)
+          
+          if response:
+            send_reply(response)
+
+        if "!wiki" in body:
+          with open("commands.json", "r") as j:
+            json_data = json.load(j)
+            search_data = json_data["wiki"]
+
+          response = link_commands("wiki", search_data)
+          
+          if response:
+            send_reply(response)
 
   except praw.exceptions.APIException as e:
     logger.error(f"Encountered an API exception: {e}")
