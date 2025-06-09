@@ -109,7 +109,17 @@ def link_commands(type, search_data):
       break
 
   if returned_link:
-    return f"Here's the link for `{returned_display_name}`: {returned_link}"
+    if type == "wiki":
+      # if this is linking to a specific section of the wiki page
+      if "#" in returned_link:
+        return (f"Here's the link for **[{returned_display_name}]({returned_link})**.\n\n"
+                f"This is a part of the page: {returned_link.split('#')[0]}\n\n"
+                f"{config_wiki['wiki_footer']}")
+      else:
+        return f"Here's the link for `{returned_display_name}`: {returned_link}\n\n{config_wiki['wiki_footer']}"
+    else:
+      # return links for everything that isn't wiki
+      return f"Here's the link for `{returned_display_name}`: {returned_link}"
   else:
     # get close matches for the argument vs the aliases
     suggestions = difflib.get_close_matches(argument, [a for a in alt_aliases], n=3, cutoff=0.6)

@@ -83,6 +83,91 @@
     ],
     "wiki": [
         {
+            "aliases": ["app icons", "monochrome", "monochrome icons", "black and white", "black + white", "black & white", "black and white icons", "black + white icons", "black & white icons", "icon pack", "nothing icon pack"],
+            "display_name": "Nothing Icon Pack",
+            "link": "https://www.reddit.com/r/NothingTech/wiki/faq/nothing-os/#wiki_how_to_make_app_icons_monochrome_.2F_black_and_white"
+        },
+        {
+            "aliases": ["update", "os update", "nos update", "nothing os update", "should I update"],
+            "display_name": "Should I update Nothing OS?",
+            "link": "https://www.reddit.com/r/NothingTech/wiki/faq/nothing-os/#wiki_should_i_update_to_the_latest_version_of_nothing_os.3F"
+        },
+        {
+            "aliases": ["nfc icon", "what is this icon", "what icon is this", "nfc", "the nfc icon"],
+            "display_name": "The NFC Icon",
+            "link": "https://www.reddit.com/r/NothingTech/wiki/faq/nothing-os/#wiki_what_is_this_icon_in_my_status_bar.3F_.28squares_with_inner_circle.29"
+        },
+        {
+            "aliases": ["hide icons", "hide status bar icons", "status bar icon", "hide icon", "hide status bar icon", "status bar icon", "status bar", "customise status bar", "customize status bar"],
+            "display_name": "Hide status bar icons",
+            "link": "https://www.reddit.com/r/NothingTech/wiki/faq/nothing-os/#wiki_how_to_hide_status_bar_icons"
+        },
+        {
+            "aliases": ["lock screen clock", "lockscreen clock", "change lock screen clock", "change lockscreen clock", "lockscreen widgets", "lock screen widgets", "customise lock screen", "customise lockscreen", "customize lock screen" , "customize lockscreen"],
+            "display_name": "Customise lock screen",
+            "link": "https://www.reddit.com/r/NothingTech/wiki/faq/nothing-os/#wiki_how_to_change_the_lock_screen_clock_.2F_how_to_add_lock_screen_widgets"
+        },
+        {
+            "aliases": ["inter", "roboto", "system font", "change system font", "change os font", "os font", "select system font", "select font"],
+            "display_name": "Change system font",
+            "link": "https://www.reddit.com/r/NothingTech/wiki/faq/nothing-os/wiki_how_to_change_system_font"
+        },
+        {
+            "aliases": ["ndot", "enable ndot font", "enable ndot", "ndot font", "dot font", "dot matrix font"],
+            "display_name": "Enable NDot font",
+            "link": "https://www.reddit.com/r/NothingTech/wiki/faq/nothing-os/#wiki_how_to_enable_the_ndot_font"
+        },
+        {
+            "aliases": ["forgot pin", "forgotten pin", "forgot private space password", "private space password", "private space password reset", "forgotten pin / private space password"],
+            "display_name": "Forgotten PIN / Private Space password",
+            "link": "https://www.reddit.com/r/NothingTech/wiki/faq/nothing-os/#wiki_i_forgot_my_phone_pin_.2F_i_forgot_my_private_space_password"
+        },
+        {
+            "aliases": ["unknown alarm", "random alarm", "app alarm", "unknown alarm time showing"],
+            "display_name": "Unknown alarm time showing",
+            "link": "https://www.reddit.com/r/NothingTech/wiki/faq/nothing-os/#wiki_random_alarm_time_showing_on_lock_screen_.2F_quick_look_widget"
+        },
+        {
+            "aliases": ["charger", "which charger", "best charger", "phone chargers"],
+            "display_name": "Nothing phone chargers",
+            "link": "https://www.reddit.com/r/NothingTech/wiki/faq/phone/#wiki_which_charger_is_best_to_use_with_my_nothing_phone.3F"
+        },
+        {
+            "aliases": ["rattle", "rattling", "ois", "camera rattle", "camera rattling", "phone rattle", "phone rattling", "ois rattle", "ois rattling", "phone/camera rattling"],
+            "display_name": "Phone/camera rattling",
+            "link": "https://www.reddit.com/r/NothingTech/wiki/faq/phone/#wiki_why_is_my_phone_rattling_.2F_why_is_my_camera_rattling.3F"
+        },
+        {
+            "aliases": ["ear charging", "ear discharging", "unequal discharge", "ear not charging", "ear battery", "ear battery drain", "ear not charging / unequal discharge"],
+            "display_name": "Ear not charging / unequal discharge",
+            "link": "https://www.reddit.com/r/NothingTech/wiki/faq/ear/#wiki_why_are_my_buds_not_charging_.2F_discharging_equally.3F_one_bud_drains_faster_than_the_other."
+        },
+        {
+            "aliases": ["change ear name", "change bluetooth name", "bluetooth name", "change buds name"],
+            "display_name": "Change Ear name",
+            "link": "https://www.reddit.com/r/NothingTech/wiki/faq/ear/#wiki_how_to_change_the_name_of_nothing_ear_devices.3F"
+        },
+        {
+            "aliases": ["flair", "user flair", "name flair", "device flair", "flairing", "user flairing", "name flairing", "device flairing", "set flair", "set user flair", "set a user flair"],
+            "display_name": "Set a user flair",
+            "link": "https://www.reddit.com/r/NothingTech/wiki/faq/reddit/#wiki_how_to_add_devices_to_my_flair_.2F_how_to_show_devices_next_to_my_name.3F"
+        },
+        {
+            "aliases": ["post removed", "thread removed", "comment removed", "removed", "post removal"],
+            "display_name": "Post removal",
+            "link": "https://www.reddit.com/r/NothingTech/wiki/faq/reddit/#wiki_why_was_my_post_removed.3F"
+        },
+        {
+            "aliases": ["become a mod", "mod application", "subreddit mod", "mod apply", "become a subreddit mod", "become a moderator", "moderator application", "subreddit moderator", "moderator apply", "become a subreddit moderator"],
+            "display_name": "Become a subreddit moderator",
+            "link": "https://www.reddit.com/r/NothingTech/wiki/faq/reddit/#wiki_how_do_i_become_a_moderator.3F"
+        },
+        {
+            "aliases": ["two subreddits", "2 subreddits", "two subs", "2 subs", "multiple subreddits", "multiple subs", "why is there more than one subreddit"],
+            "display_name": "Why is there more than one subreddit?",
+            "link": "https://www.reddit.com/r/NothingTech/wiki/faq/reddit/#wiki_why_is_there_more_than_one_nothing_subreddit.3F"
+        },
+        {
             "aliases": ["nothing os", "nothingos", "nothing-os", "nos", "nothing os faq", "os faq", "os", "nos faq", "nothingos faq", "faq os", "faq nothing os", "faq nothingos"],
             "display_name": "Nothing OS FAQ",
             "link": "https://www.reddit.com/r/NothingTech/wiki/faq/nothing-os"
