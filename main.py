@@ -86,12 +86,22 @@ def add_comment(comment, content, submission, sticky):
   if sticky:
     new_comment.mod.distinguish(sticky=True)
 
-def link_commands(type, search_data):
+def link_commands(type, search_data, comment_body):
   # find the start + end index based on !command and new line
-  startidx = body.find(f"!{type}") + len(f"!{type}")
-  endidx = body.find("\n", startidx)
+  startidx = comment_body.find(f"!{type}") + len(f"!{type}")
+  endidx = comment_body.find("\n", startidx)
   # get the argument based on startidx and endidx, or just startidx
-  argument = body[startidx:endidx].strip() if endidx != -1 else body[startidx:].strip()
+  argument = comment_body[startidx:endidx].strip() if endidx != -1 else comment_body[startidx:].strip()
+
+  if not argument:
+    logger.debug(f"!{type} request found but no argument specified. Full body: {comment_body}")
+    if type == "wiki":
+      return ("Here's the link to our wiki: https://reddit.com/r/NothingTech/wiki\n\n"
+              "You can also use this command to find specific topics, e.g. `!wiki nfc icon` or `!wiki phone faq`.")
+    else:
+      return ("You can view all of Nothing's official links here: https://www.reddit.com/mod/NothingTech/wiki/library/official-links\n\n"
+              "You can also use this command to find specific links, e.g. `!link phone (3a)` or `!link nothing discord`.")
+
   if type == "link" and ("ear" in argument or "phone" in argument):
     argument = argument.replace("nothing", "") # remove "nothing" from phone and ear searches
   logger.info(f"!{type} request for {argument} found")
@@ -186,12 +196,12 @@ while True:
           response = f"u/{comment.parent().author.name}, here's how to get in touch with Nothing support:\n\n* Visit the [Nothing Support Centre](https://nothing.tech/pages/support-centre) and press the blue chat icon for live chat support (region and time dependent).\n* Visit the [Nothing Customer Support](https://nothing.tech/pages/contact-support) page to get in contact via web form.\n* Contact [\@NothingSupport on X](https://x.com/NothingSupport)."
           send_reply(comment, response)
 
-        if "!link" in body:
+        if "!link" or "!linkme" in body:
           with open("commands.json", "r") as j:
             json_data = json.load(j)
             search_data = json_data['link']
 
-          response = link_commands("link", search_data)
+          response = link_commands("link", search_data, body)
           
           if response:
             send_reply(comment, response)
@@ -201,7 +211,7 @@ while True:
             json_data = json.load(j)
             search_data = json_data['wiki']
 
-          response = link_commands("wiki", search_data)
+          response = link_commands("wiki", search_data, body)
           
           if response:
             send_reply(comment, response)
