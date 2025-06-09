@@ -196,7 +196,7 @@ while True:
           response = f"u/{comment.parent().author.name}, here's how to get in touch with Nothing support:\n\n* Visit the [Nothing Support Centre](https://nothing.tech/pages/support-centre) and press the blue chat icon for live chat support (region and time dependent).\n* Visit the [Nothing Customer Support](https://nothing.tech/pages/contact-support) page to get in contact via web form.\n* Contact [\@NothingSupport on X](https://x.com/NothingSupport)."
           send_reply(comment, response)
 
-        if "!link" or "!linkme" in body:
+        if "!link" in body or "!linkme" in body:
           with open("commands.json", "r") as j:
             json_data = json.load(j)
             search_data = json_data['link']
