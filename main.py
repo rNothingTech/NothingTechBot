@@ -101,11 +101,11 @@ def link_commands(type, search_data):
 
   for search in search_data:
     # add all the aliases to the alt_aliases list for searching
-    alt_aliases.extend(search["aliases"])
+    alt_aliases.extend(search['aliases'])
     # check if the agument exact matches any aliases
-    if argument in [alias for alias in search["aliases"]]:
-      returned_display_name = search["display_name"]
-      returned_link = search["link"]
+    if argument in [alias for alias in search['aliases']]:
+      returned_display_name = search['display_name']
+      returned_link = search['link']
       break
 
   if returned_link:
@@ -128,11 +128,11 @@ def link_commands(type, search_data):
       added_suggestions = set()
       for suggestion in suggestions:
         for search in search_data:
-          if suggestion in search["aliases"]:
+          if suggestion in search['aliases']:
             # if we didn't already add this one, add it to the suggestions
-            if search["display_name"] not in added_suggestions:
-              suggestion_lines.append(f"* `{search["display_name"]}`: {search["link"]}")
-              added_suggestions.add(search["display_name"])
+            if search['display_name'] not in added_suggestions:
+              suggestion_lines.append(f"* `{search['display_name']}`: {search['link']}")
+              added_suggestions.add(search['display_name'])
             break
       
       suggestion_block = "\n".join(suggestion_lines)
@@ -189,7 +189,7 @@ while True:
         if "!link" in body:
           with open("commands.json", "r") as j:
             json_data = json.load(j)
-            search_data = json_data["link"]
+            search_data = json_data['link']
 
           response = link_commands("link", search_data)
           
@@ -199,7 +199,7 @@ while True:
         if "!wiki" in body:
           with open("commands.json", "r") as j:
             json_data = json.load(j)
-            search_data = json_data["wiki"]
+            search_data = json_data['wiki']
 
           response = link_commands("wiki", search_data)
           
