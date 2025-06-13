@@ -189,9 +189,14 @@ while True:
               send_reply(comment, "You can't set the bot's comment as the answer. Please use `!solved` to change the flair to solved.")
             else:
               content = (
-                f"u/{comment.author.name} marked the following comment as the best answer:\n\n"
-                f'> {comment.parent().body.replace("\n\n", "\n\n> ")}\n\n'
-                f"> \\- by u/{comment.parent().author.name} - [Jump to comment]({comment.parent().permalink})"
+                "u/{} marked the following comment as the best answer:\n\n"
+                "> {}\n\n"
+                "> \\- by u/{} - [Jump to comment]({})"
+              ).format(
+                comment.author.name,
+                comment.parent().body.replace("\n\n", "\n\n> "),
+                comment.parent().author.name,
+                comment.parent().permalink
               )
 
               add_comment(comment, content, comment.submission, True)
