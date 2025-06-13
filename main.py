@@ -102,9 +102,15 @@ def link_commands(type, search_data, comment_body):
       return ("You can view all of Nothing's official links here: https://www.reddit.com/mod/NothingTech/wiki/library/official-links\n\n"
               "You can also use this command to find specific links, e.g. `!link phone (3a)` or `!link nothing discord`.")
 
-  argument = argument.replace("nothing", "").replace("nothing's", "").replace("about", "").replace("on", "").replace("page", "").strip() # remove common search terms
+  argument = argument.replace("nothing", "").replace("nothing's", "").replace("about", "").replace("on", "").replace("page", "").strip().replace("the", "").strip() # remove common search terms
   argument = " ".join(argument.split()) # split out then join by space to remove any double spaces, tabs, etc.
   logger.info(f"!{type} request for {argument} found")
+
+  # too many spaces to be a search argument
+  if type == "wiki" and argument.count(" ") > 4:
+    return config_wiki['wiki_no_match_footer']
+  if type == "link" and argument.count(" ") > 2:
+    return config_wiki['link_no_match_footer ']
   
   returned_link = None
   alt_aliases = []
@@ -149,15 +155,9 @@ def link_commands(type, search_data, comment_body):
       return f"I couldn't an exact match for `{argument}`. Did you mean any of the following?\n\n{suggestion_block}"
     else:
       if type == "wiki":
-        return (
-          f"I couldn't find a link for `{argument}` and no similar matches were found. If you think this is wrong, contact the mods.\n\n"
-          f"Head to the [r/NothingTech wiki index page](https://www.reddit.com/r/NothingTech/wiki/) to browse our full wiki."
-        )
+        return f"I couldn't find a link for `{argument}` and no similar matches were found. If you think this is wrong, contact the mods.\n\n{config_wiki['wiki_no_match_footer']}"
       else:
-        return (
-          f"I couldn't find a link for `{argument}` and no similar matches were found. If you think this is wrong, contact the mods.\n\n"
-          f"View the [Official Links wiki page](https://www.reddit.com/r/NothingTech/wiki/library/official-links) for a list of some of the official links."
-        )
+        return f"I couldn't find a link for `{argument}` and no similar matches were found. If you think this is wrong, contact the mods.\n\n{config_wiki['link_no_match_footer']}"
 
 while True:
   try:
