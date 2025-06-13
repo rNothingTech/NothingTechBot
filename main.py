@@ -190,7 +190,7 @@ while True:
             else:
               content = (
                 f"u/{comment.author.name} marked the following comment as the best answer:\n\n"
-                f"> {comment.parent().body}\n\n"
+                f"> {comment.parent().body.replace("\n\n", "\n\n> ")}\n\n"
                 f"> \- by u/{comment.parent().author.name} - [Jump to comment]({comment.parent().permalink})"
               )
 
