@@ -100,7 +100,9 @@ def is_command_quoted(comment_body, command) -> bool:
   # check if the command is surrounded by quotes (", ', `)
   pattern = rf"""(\\)*([\"'`])\s*{command}\s*\1*\2"""
 
-  return bool(re.search(pattern, comment_body))
+  # TODO: THIS IS NOT WORKING AS INTENDED
+  return False
+  #return bool(re.search(pattern, comment_body))
 
 def sanitise_command(argument):
   # remove words
