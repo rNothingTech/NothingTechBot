@@ -143,20 +143,19 @@ def link_commands(type, search_data, comment_body):
   if not argument:
     logger.debug(f"!{type} request found but no argument specified. Full body: {comment_body}")
 
-    match type:
-      case "glyph":
+    if type == "glyph":
         return ("You can view all community Glyph projects here: https://reddit.com/r/NothingTech/wiki/library/glyph-projects/\n\n"
               "You can also use this command to find specific Glyph projects, e.g. `!glyph bngc` or `!glyph glyphtones`.")
-      case "app":
+    elif type == "app":
         return ("You can view all community apps here: https://reddit.com/r/NothingTech/wiki/library/community-apps/\n\n"
               "You can also use this command to find specific apps, e.g. `!app simone` or `!app glyphify`.")
-      case "wiki":
+    elif type == "wiki":
         return ("Here's the link to our wiki: https://reddit.com/r/NothingTech/wiki\n\n"
               "You can also use this command to find specific topics, e.g. `!wiki nfc icon` or `!wiki phone chargers`.")
-      case "toy":
+    elif type == "toy":
         return ("You can view all community toys here: https://www.reddit.com/r/NothingTech/wiki/library/glyph-projects/#wiki_community_glyph_matrix_toys\n\n"
               "You can also use this command to find specific toys, e.g. `!toy magic 8 ball` or `!toy counter`.")
-      case _:
+    elif type == "link":
         return ("You can view all of Nothing's official links here: https://reddit.com/mod/NothingTech/wiki/library/official-links\n\n"
               "You can also use this command to find specific links, e.g. `!link phone (3a)` or `!link nothing discord`.")
       
