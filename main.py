@@ -243,6 +243,13 @@ while True:
             subreddit_name = comment.submission.subreddit.display_name.lower()
             comment.submission.flair.select(solved_flair_template_ids.get(subreddit_name))
             send_reply(comment, config_wiki['solved_response'])
+        elif "!solved" in body:
+          if comment.author == comment.submission.author:
+            logger.debug("!solved found and author is OP")
+          elif any(mod.name == comment.author.name for mod in subreddit_mods):
+            logger.debug("!solved found and author is a mod")
+          else:
+            logger.debug("!solved found but author is not OP or a mod, ignoring")
 
         # check for !answer in the body of a comment from OP or a mod of a submission, set solved flair and comment the solution
         if "!answer" in body and (comment.author == comment.submission.author or any(mod.name == comment.author.name for mod in subreddit_mods)):
@@ -285,6 +292,13 @@ while True:
                 subreddit_name = comment.submission.subreddit.display_name.lower()
                 comment.submission.flair.select(solved_flair_template_ids.get(subreddit_name))
                 send_reply(comment, config_wiki['answer_response'])
+        elif "!answer" in body:
+          if comment.author == comment.submission.author:
+            logger.debug("!answer found and author is OP")
+          elif any(mod.name == comment.author.name for mod in subreddit_mods):
+            logger.debug("!answer found and author is a mod")
+          else:
+            logger.debug("!answer found but author is not OP or a mod, ignoring")
 
         # check for !support in the body of a comment and respond with support links
         if "!support" in body:
