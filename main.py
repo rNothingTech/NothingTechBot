@@ -13,7 +13,7 @@ try:
     reddit_password = config['reddit_password']
     subreddit_names = config['subreddit'].replace(' ', '')
     solved_flair_template_ids = config['solved_flair_template_ids']
-    bot_config_wiki_page = config['bot_config_wiki_page']
+    # bot_config_wiki_page = config['bot_config_wiki_page']
     bool_send_response = config['bool_send_response']
     log_level_terminal = config['log_level_terminal']
     log_level_file = config['log_level_file']
@@ -65,7 +65,10 @@ try:
       logger.error(f"Failed to get moderators for {subreddit_name}: {e}")
       quit()
   
-  config_wiki_page = first_subreddit.wiki[bot_config_wiki_page].content_md.strip()
+  with open('bot_config.txt', 'r') as bot_config_file:
+    config_wiki_page = bot_config_file.read().strip()
+
+  # config_wiki_page = first_subreddit.wiki[bot_config_wiki_page].content_md.strip()
   config_parser = configparser.ConfigParser()
   config_parser.read_string(config_wiki_page)
   config_wiki = config_parser['bot']
@@ -77,7 +80,7 @@ try:
   
   logger.info(f"Init complete: logged in as {reddit_username} monitoring {subreddit_names}")
 except Exception as e:
-  logger.error(f"Encountered an exception during startup: {e}")
+  print(f"Encountered an exception during startup: {e}")
   quit()
 
 def send_reply(comment, response):
@@ -150,6 +153,9 @@ def link_commands(type, search_data, comment_body):
       case "wiki":
         return ("Here's the link to our wiki: https://reddit.com/r/NothingTech/wiki\n\n"
               "You can also use this command to find specific topics, e.g. `!wiki nfc icon` or `!wiki phone chargers`.")
+      case "toy":
+        return ("You can view all community toys here: https://www.reddit.com/r/NothingTech/wiki/library/glyph-projects/#wiki_community_glyph_matrix_toys\n\n"
+              "You can also use this command to find specific toys, e.g. `!toy magic 8 ball` or `!toy counter`.")
       case _:
         return ("You can view all of Nothing's official links here: https://reddit.com/mod/NothingTech/wiki/library/official-links\n\n"
               "You can also use this command to find specific links, e.g. `!link phone (3a)` or `!link nothing discord`.")
@@ -159,7 +165,7 @@ def link_commands(type, search_data, comment_body):
   logger.info(f"!{type} request for {argument} found")
 
   # too many spaces to be a search argument
-  if (type == "wiki" or type == "glyph" or type == "app") and argument.count(" ") > 4:
+  if (type == "wiki" or type == "glyph" or type == "app" or type == "toy") and argument.count(" ") > 4:
     return config_wiki['wiki_no_match_footer']
   if type == "link" and argument.count(" ") > 2:
     return config_wiki['link_no_match_footer ']
@@ -186,8 +192,14 @@ def link_commands(type, search_data, comment_body):
       else:
         return f"Here's the link for `{returned_display_name}`: {returned_link}\n\n{config_wiki['wiki_footer']}"
     else:
+      footer = ""
+      if type == "app":
+        footer = '\n\n' + config_wiki['app_footer']
+      elif type == "glyph" or type == "toy":
+        footer = '\n\n' + config_wiki['glyph_footer']
+
       # return links for everything that isn't wiki (link, glyph, app)
-      return f"Here's the link for `{returned_display_name}`: {returned_link}"
+      return f"Here's the link for `{returned_display_name}`: {returned_link}{footer}"
   else:
     # get close matches for the argument vs the aliases
     suggestions = difflib.get_close_matches(argument, [a for a in alt_aliases], n=3, cutoff=0.6)
@@ -283,7 +295,7 @@ while True:
             response = f"u/{comment.parent().author.name}, here's how to get in touch with Nothing support:\n\n* Visit the [Nothing Support Centre](https://nothing.tech/pages/support-centre) and press the blue chat icon for live chat support (region and time dependent).\n* Visit the [Nothing Customer Support](https://nothing.tech/pages/contact-support) page to get in contact via web form.\n* Contact [\@NothingSupport on X](https://x.com/NothingSupport)."
             send_reply(comment, response)
 
-        if any(cmd in body for cmd in ["!link", "!linkme", "!wiki", "!glyph", "!glyphs", "!app", "!apps"]):
+        if any(cmd in body for cmd in ["!link", "!linkme", "!wiki", "!glyph", "!glyphs", "!app", "!apps", "!toy", "!toys"]):
           logger.info("!command found, checking type")
           
           if "!link" in body or "!linkme" in body:
@@ -294,6 +306,8 @@ while True:
             command_type = "glyph"
           elif "!app" in body or "!apps" in body:
             command_type = "app"
+          elif "!toy" in body or "!toys" in body:
+            command_type = "toy"
 
           logger.info(f"Command type: {command_type}, checking if quoted")
           if not is_command_quoted(body, f"!{command_type}"):
