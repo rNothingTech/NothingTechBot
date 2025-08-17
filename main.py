@@ -230,6 +230,7 @@ while True:
         logger.debug(f"Comment from {comment.author}: {comment.body}")
         subreddit_name = comment.subreddit.display_name.lower()
         subreddit_mods = moderators_map.get(subreddit_name, [])
+        logger.debug(f"Subreddit moderators: {[mod.name for mod in subreddit_mods]}")
         
         # check if the comment is the bot's
         if comment.author.name == reddit.user.me():
