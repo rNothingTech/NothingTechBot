@@ -1,13 +1,13 @@
 {
      "glyph": [
         {
-            "aliases": ["bgnc", "better nothing glyph composer"],
-            "display_name": "Better Nothing Glyph Composer (BNGC)",
+            "aliases": ["bngc", "better nothing glyph composer"],
+            "display_name": "Better Nothing Glyph Composer (BNGC) by Krishnagopal Sinha",
             "link": "https://better-nothing-glyph-composer.pages.dev/"
         },
         {
             "aliases": ["glyphtones", "ringtones", "download"],
-            "display_name": "Glyphtones",
+            "display_name": "Glyphtones by Firu115",
             "link": "https://glyphtones.firu.dev/"
         },
         {
@@ -21,80 +21,117 @@
             "link": "https://github.com/SebiAi/GlyphVisualizer"
         }
      ],
+     "toy": [
+        {
+            "aliases": ["counter"],
+            "display_name": "Counter by Daniel",
+            "link": "https://nothing.community/d/36837-introducing-counter-a-glyph-toy"
+        },
+        {
+            "aliases": ["dot hub", "dothub", "music visualiser", "music visualizer", "visualiser", "visualizer", "compass", "breathing", "coin flip", "dice"],
+            "display_name": "Dot Hub by nostream",
+            "link": "https://play.google.com/store/apps/details?id=com.gesekus.dothub"
+        },
+        {
+            "aliases": ["glyphify", "nothing glyphify", "ball maze", "quick dial", "quick glyph dial", "glyph dial", "glyphify dial"],
+            "display_name": "Glyphify by Fr4nKB",
+            "link": "https://play.google.com/store/apps/details?id=com.frank.glyphify"
+        },
+        {
+            "aliases": ["leveller", "leveler"],
+            "display_name": "Leveller by RapidZapper",
+            "link": "https://play.google.com/store/apps/details?id=com.lisra.matrixleveler"
+        },
+        {
+            "aliases": ["8ball", "8 ball", "magic 8 ball", "magic8ball", "magic 8ball"],
+            "display_name": "Magic 8 Ball by Fr4nKB",
+            "link": "https://play.google.com/store/apps/details?id=com.frank.magic8ball"
+        },
+        {
+            "aliases": ["notifications", "app notifications", "timer", "glyph timer", "glyph progress", "progress", "progress bar", "bluetooth", "bluetooth alert"],
+            "display_name": "SmartGlyph by Experion Labs",
+            "link": "https://play.google.com/store/apps/details?id=com.frank.magic8ball"
+        },
+        {
+            "aliases": ["ringer mode", "ringer", "battery flow", "battery monitor", "battery"],
+            "display_name": "Glyph Toybox by Singularity Design",
+            "link": "https://play.google.com/store/apps/details?id=com.frank.magic8ball"
+        }
+     ],
      "app": [
         {
             "aliases": ["glyphify", "nothing glyphify"],
-            "display_name": "Glyphify",
+            "display_name": "Glyphify by Fr4nKB",
             "link": "https://play.google.com/store/apps/details?id=com.frank.glyphify"
         },
         {
             "aliases": ["smartglyph", "smart glyph"],
-            "display_name": "SmartGlyph",
+            "display_name": "SmartGlyph by Experion Labs",
             "link": "https://play.google.com/store/apps/details?id=com.voidtechstudios.smartglyph"
         },
         {
             "aliases": ["blockit", "block it"],
-            "display_name": "Blockit",
+            "display_name": "Blockit by Mirko_ddd",
             "link": "https://play.google.com/store/apps/details?id=com.hypenet.focused"
         },
         {
             "aliases": ["nothing glyph notifications", "glyph notifications"],
-            "display_name": "Nothing Glyph Notifications",
+            "display_name": "Nothing Glyph Notifications by GlyphLab",
             "link": "https://play.google.com/store/apps/details?id=com.tldc.essentials"
         },
         {
             "aliases": ["simone", "simone game", "simon glyph", "simone glyph game"],
-            "display_name": "Simone - Glyph Game",
+            "display_name": "Simone - Glyph Game by RapidZapper",
             "link": "https://play.google.com/store/apps/details?id=com.lisra.simone"
         },
         {
             "aliases": ["compass", "glyph compass"],
-            "display_name": "Glyph Compass",
+            "display_name": "Glyph Compass by JayKayCooperations",
             "link": "https://play.google.com/store/apps/details?id=com.JayKayCooperations.glyph_compass"
         },
         {
             "aliases": ["noting", "noting notes"],
-            "display_name": "Noting Notes",
+            "display_name": "Noting Notes by Hearthborn",
             "link": "https://play.google.com/store/apps/details?id=com.hearthborn.studios.notingnotes"
         },
         {
             "aliases": ["notes markdown", "notes md", "notes with markdown", "notes: notes with markdown"],
-            "display_name": "Notes: Notes with Markdown",
+            "display_name": "Notes: Notes with Markdown by monospace",
             "link": "https://play.google.com/store/apps/details?id=com.monospace.notes"
         },
         {
             "aliases": ["nnotes", "n notes", "colorful notes", "colourful notes"],
-            "display_name": "nNotes - Colorful Notes",
+            "display_name": "nNotes - Colorful Notes Bhavuk Verma",
             "link": "https://play.google.com/store/apps/details?id=com.bhavukverma.nNotes"
         },
         {
             "aliases": ["dothing", "todo", "todo list", "nothing tasks"],
-            "display_name": "Dothing",
+            "display_name": "Dothing FirstYogi",
             "link": "https://play.google.com/store/apps/details?id=com.firstyogi.dothing"
         },
         {
             "aliases": ["no things", "nothing list", "no things to do list", "no things to do", "no things todo"],
-            "display_name": "No Things To Do List",
+            "display_name": "No Things To Do List by Martin Diermayr",
             "link": "https://play.google.com/store/apps/details?id=com.todo.nothingwidgets"
         },
         {
             "aliases": ["novolume", "volume", "slider", "wheel", "no volume"],
-            "display_name": "NoVolume - The only volume slider with haptics",
+            "display_name": "NoVolume - Volume slider with haptics by NoAppsStudio",
             "link": "https://play.google.com/store/apps/details?id=com.nostudio.novolume"
         },
         {
             "aliases": ["no calendar", "nocalendar", "calendar"],
-            "display_name": "NoCalendar",
+            "display_name": "NoCalendar by NoAppsStudio",
             "link": "https://play.google.com/store/apps/details?id=com.calendar.nocalendar"
         },
         {
             "aliases": ["ndial", "n dial", "dialer", "phone"],
-            "display_name": "N Dial: Minimal Dialer",
+            "display_name": "N Dial: Minimal Dialer by Hearthborn",
             "link": "https://play.google.com/store/apps/details?id=com.hearthborn.studios.ndial"
         },
         {
             "aliases": ["ncalc", "n calc", "calculator"],
-            "display_name": "N Calc: A Fun Calculator",
+            "display_name": "N Calc: A Fun Calculator by Hearthborn",
             "link": "https://play.google.com/store/apps/details?id=com.hearthborn.studios.ncalc"
         },
         {
@@ -104,37 +141,37 @@
         },
         {
             "aliases": ["nothing clock", "clock", "timer", "stopwatch", "alarm"],
-            "display_name": "Nothing Clock",
+            "display_name": "Nothing Clock by Sasha Chverenko",
             "link": "https://github.com/SushiiReboot/Nothing-Clock"
         },
         {
             "aliases": ["noid", "nothing files", "files", "file manager", "file"],
-            "display_name": "Noid - File Manager",
+            "display_name": "Noid - File Manager by TechSip Studios",
             "link": "https://play.google.com/store/apps/details?id=com.techsip.noid"
         },
         {
             "aliases": ["music", "nothing music", "missing core", "missingcore", "missingcore music", "missing core music"],
-            "display_name": "MissingCore Music",
+            "display_name": "MissingCore Music by MissingCore",
             "link": "https://play.google.com/store/apps/details?id=com.cyanchill.missingcore.music"
         },
         {
             "aliases": ["widgets pro"],
-            "display_name": "Widgets Pro",
+            "display_name": "Widgets Pro by Preethamkmr3",
             "link": "https://play.google.com/store/apps/details?id=com.tpk.widgetspro"
         },
         {
             "aliases": ["nothing land", "dynamic island", "dynamicspot", "dynamic spot"],
-            "display_name": "NothingLand",
+            "display_name": "NothingLand by TheGlitchh",
             "link": "https://github.com/TheGlitchh/NothingLand"
         },
         {
             "aliases": ["news", "nothing news"],
-            "display_name": "Nothing News",
+            "display_name": "Nothing News by Mirko_ddd",
             "link": "https://play.google.com/store/apps/details?id=com.nothing.news"
         },
         {
             "aliases": ["dot battery", "battery wallpaper", "wallpaper", "live wallpaper"],
-            "display_name": "Dot Battery Live Wallpaper",
+            "display_name": "Dot Battery Live Wallpaper by RapidZapper",
             "link": "https://play.google.com/store/apps/details?id=com.lisra.dotbattery"
         }
     ],

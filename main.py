@@ -13,7 +13,7 @@ try:
     reddit_password = config['reddit_password']
     subreddit_names = config['subreddit'].replace(' ', '')
     solved_flair_template_ids = config['solved_flair_template_ids']
-    bot_config_wiki_page = config['bot_config_wiki_page']
+    # bot_config_wiki_page = config['bot_config_wiki_page']
     bool_send_response = config['bool_send_response']
     log_level_terminal = config['log_level_terminal']
     log_level_file = config['log_level_file']
@@ -64,8 +64,18 @@ try:
     except Exception as e:
       logger.error(f"Failed to get moderators for {subreddit_name}: {e}")
       quit()
+
+  # log the moderators map for each subreddit
+  for subreddit_name, moderators in moderators_map.items():
+    if moderators:
+      logger.debug(f"Subreddit: {subreddit_name} moderators: {[mod.name for mod in moderators]}")
+    else:
+      logger.debug(f"Subreddit: {subreddit_name} has no moderators or could not be fetched.")
   
-  config_wiki_page = first_subreddit.wiki[bot_config_wiki_page].content_md.strip()
+  with open('bot_config.txt', 'r') as bot_config_file:
+    config_wiki_page = bot_config_file.read().strip()
+
+  # config_wiki_page = first_subreddit.wiki[bot_config_wiki_page].content_md.strip()
   config_parser = configparser.ConfigParser()
   config_parser.read_string(config_wiki_page)
   config_wiki = config_parser['bot']
@@ -77,7 +87,7 @@ try:
   
   logger.info(f"Init complete: logged in as {reddit_username} monitoring {subreddit_names}")
 except Exception as e:
-  logger.error(f"Encountered an exception during startup: {e}")
+  print(f"Encountered an exception during startup: {e}")
   quit()
 
 def send_reply(comment, response):
@@ -140,17 +150,19 @@ def link_commands(type, search_data, comment_body):
   if not argument:
     logger.debug(f"!{type} request found but no argument specified. Full body: {comment_body}")
 
-    match type:
-      case "glyph":
+    if type == "glyph":
         return ("You can view all community Glyph projects here: https://reddit.com/r/NothingTech/wiki/library/glyph-projects/\n\n"
               "You can also use this command to find specific Glyph projects, e.g. `!glyph bngc` or `!glyph glyphtones`.")
-      case "app":
+    elif type == "app":
         return ("You can view all community apps here: https://reddit.com/r/NothingTech/wiki/library/community-apps/\n\n"
               "You can also use this command to find specific apps, e.g. `!app simone` or `!app glyphify`.")
-      case "wiki":
+    elif type == "wiki":
         return ("Here's the link to our wiki: https://reddit.com/r/NothingTech/wiki\n\n"
               "You can also use this command to find specific topics, e.g. `!wiki nfc icon` or `!wiki phone chargers`.")
-      case _:
+    elif type == "toy":
+        return ("You can view all community toys here: https://www.reddit.com/r/NothingTech/wiki/library/glyph-projects/#wiki_community_glyph_matrix_toys\n\n"
+              "You can also use this command to find specific toys, e.g. `!toy magic 8 ball` or `!toy counter`.")
+    elif type == "link":
         return ("You can view all of Nothing's official links here: https://reddit.com/mod/NothingTech/wiki/library/official-links\n\n"
               "You can also use this command to find specific links, e.g. `!link phone (3a)` or `!link nothing discord`.")
       
@@ -159,7 +171,7 @@ def link_commands(type, search_data, comment_body):
   logger.info(f"!{type} request for {argument} found")
 
   # too many spaces to be a search argument
-  if (type == "wiki" or type == "glyph" or type == "app") and argument.count(" ") > 4:
+  if (type == "wiki" or type == "glyph" or type == "app" or type == "toy") and argument.count(" ") > 4:
     return config_wiki['wiki_no_match_footer']
   if type == "link" and argument.count(" ") > 2:
     return config_wiki['link_no_match_footer ']
@@ -186,8 +198,14 @@ def link_commands(type, search_data, comment_body):
       else:
         return f"Here's the link for `{returned_display_name}`: {returned_link}\n\n{config_wiki['wiki_footer']}"
     else:
+      footer = ""
+      if type == "app":
+        footer = '\n\n' + config_wiki['app_footer']
+      elif type == "glyph" or type == "toy":
+        footer = '\n\n' + config_wiki['glyph_footer']
+
       # return links for everything that isn't wiki (link, glyph, app)
-      return f"Here's the link for `{returned_display_name}`: {returned_link}"
+      return f"Here's the link for `{returned_display_name}`: {returned_link}{footer}"
   else:
     # get close matches for the argument vs the aliases
     suggestions = difflib.get_close_matches(argument, [a for a in alt_aliases], n=3, cutoff=0.6)
@@ -217,7 +235,7 @@ while True:
         file_handler = logging.FileHandler(f'logs/log-{today.strftime("%Y-%m-%d")}.log')
         logger.info(f"Found comment in {subreddit}, {comment.id} in {comment.submission.id}")
         logger.debug(f"Comment from {comment.author}: {comment.body}")
-        subreddit_name = comment.subreddit.display_name.lower()
+        subreddit_name = comment.subreddit.display_name
         subreddit_mods = moderators_map.get(subreddit_name, [])
         
         # check if the comment is the bot's
@@ -232,6 +250,13 @@ while True:
             subreddit_name = comment.submission.subreddit.display_name
             comment.submission.flair.select(solved_flair_template_ids.get(subreddit_name))
             send_reply(comment, config_wiki['solved_response'])
+        elif "!solved" in body:
+          if comment.author == comment.submission.author:
+            logger.debug("!solved found and author is OP")
+          elif any(mod.name == comment.author.name for mod in subreddit_mods):
+            logger.debug("!solved found and author is a mod")
+          else:
+            logger.debug("!solved found but author is not OP or a mod, ignoring")
 
         # check for !answer in the body of a comment from OP or a mod of a submission, set solved flair and comment the solution
         if "!answer" in body and (comment.author == comment.submission.author or any(mod.name == comment.author.name for mod in subreddit_mods)):
@@ -274,6 +299,13 @@ while True:
                 subreddit_name = comment.submission.subreddit.display_name
                 comment.submission.flair.select(solved_flair_template_ids.get(subreddit_name))
                 send_reply(comment, config_wiki['answer_response'])
+        elif "!answer" in body:
+          if comment.author == comment.submission.author:
+            logger.debug("!answer found and author is OP")
+          elif any(mod.name == comment.author.name for mod in subreddit_mods):
+            logger.debug("!answer found and author is a mod")
+          else:
+            logger.debug("!answer found but author is not OP or a mod, ignoring")
 
         # check for !support in the body of a comment and respond with support links
         if "!support" in body:
@@ -294,7 +326,7 @@ while True:
             send_reply(comment, response)
 
         # check for !link, !wiki, !glyph or !app in the body of a comment and respond with the relevant link
-        json_commands = ["!link", "!linkme", "!wiki", "!faq", "!glyph", "!glyphs", "!app", "!apps"]
+        json_commands = ["!link", "!linkme", "!wiki", "!faq", "!glyph", "!glyphs", "!app", "!apps", "!toy", "!toys"]
         matched_link_command = next((cmd for cmd in json_commands if cmd in body), None)
         if matched_link_command:
           logger.info(f"{matched_link_command} found, checking type")
@@ -307,6 +339,8 @@ while True:
             command_type = "glyph"
           elif matched_link_command == "!app" or matched_link_command == "!apps":
             command_type = "app"
+          elif "!toy" in body or "!toys" in body:
+            command_type = "toy"
 
           logger.info(f"Command type: {command_type}, checking if quoted")
           if not is_command_quoted(body, f"!{command_type}"):
