@@ -339,7 +339,7 @@ while True:
             command_type = "glyph"
           elif matched_link_command == "!app" or matched_link_command == "!apps":
             command_type = "app"
-          elif "!toy" in body or "!toys" in body:
+          elif matched_link_command == "!toy" or matched_link_command ==  "!toys":
             command_type = "toy"
 
           logger.info(f"Command type: {command_type}, checking if quoted")
