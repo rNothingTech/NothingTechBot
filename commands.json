@@ -33,6 +33,31 @@
             "link": "https://play.google.com/store/apps/details?id=com.gesekus.dothub"
         },
         {
+            "aliases": ["beat", "glyph beat", "beat visualiser", "beat visualizer"],
+            "display_name": "Glyph Beat by pauwma",
+            "link": "https://play.google.com/store/apps/details?id=com.pauwma.glyphbeat"
+        },
+        {
+            "aliases": ["bike", "glyph bike", "bike game", "glyph bike game"],
+            "display_name": "Glyph Bike by Ofishial Digital",
+            "link": "https://play.google.com/store/apps/details?id=com.ofishialdigital.glyphbike"
+        },
+        {
+            "aliases": ["catch", "glyph catch", "pokemon", "pokémon", "catch pokemon", "catch pokémon"],
+            "display_name": "Glyph Catch by Equal_Parts",
+            "link": "https://nothing.community/en/d/45626-pokemon-collecting-fan-game-for-np3-glyph-matrix"
+        },
+        {
+            "aliases": ["museum", "glyph museum", "art", "glyph art", "animation", "animations", "glyph animations"],
+            "display_name": "Glyph Museum by pauwma",
+            "link": "https://play.google.com/store/apps/details?id=com.pauwma.glyphmuseum"
+        },
+        {
+            "aliases": ["glyph toybox", "toybox", "ringer mode", "ringer", "battery flow", "battery monitor", "battery"],
+            "display_name": "Glyph Toybox by Singularity Design",
+            "link": "https://play.google.com/store/apps/details?id=com.singularityux.glyphtoybox"
+        },
+        {
             "aliases": ["glyphify", "nothing glyphify", "ball maze", "quick dial", "quick glyph dial", "glyph dial", "glyphify dial"],
             "display_name": "Glyphify by Fr4nKB",
             "link": "https://play.google.com/store/apps/details?id=com.frank.glyphify"
@@ -48,14 +73,9 @@
             "link": "https://play.google.com/store/apps/details?id=com.frank.magic8ball"
         },
         {
-            "aliases": ["notifications", "app notifications", "timer", "glyph timer", "glyph progress", "progress", "progress bar", "bluetooth", "bluetooth alert"],
+            "aliases": ["smartglyph", "smart glyph", "notifications", "app notifications", "timer", "glyph timer", "glyph progress", "progress", "progress bar", "bluetooth", "bluetooth alert"],
             "display_name": "SmartGlyph by Experion Labs",
-            "link": "https://play.google.com/store/apps/details?id=com.frank.magic8ball"
-        },
-        {
-            "aliases": ["ringer mode", "ringer", "battery flow", "battery monitor", "battery"],
-            "display_name": "Glyph Toybox by Singularity Design",
-            "link": "https://play.google.com/store/apps/details?id=com.frank.magic8ball"
+            "link": "https://play.google.com/store/apps/details?id=com.voidtechstudios.smartglyph"
         }
      ],
      "app": [
@@ -212,6 +232,11 @@
             "link": "https://nothing.tech/pages/phone-3"
         },
         {
+            "aliases": ["phone (3a) lite", "phone 3a lite", "phone3a lite", "phone(3a) lite", "np3a lite", "3a lite", "(3a) lite"],
+            "display_name": "Phone (3a) Lite",
+            "link": "https://nothing.tech/pages/phone-3a-lite"
+        },
+        {
             "aliases": ["ear (1)", "ear 1", "ear1", "ear(1)"],
             "display_name": "Ear (1)",
             "link": "https://nothing.tech/products/ear-1"
@@ -235,6 +260,11 @@
             "aliases": ["ear", "ear (2024)", "ear 2024"],
             "display_name": "Ear",
             "link": "https://nothing.tech/products/ear"
+        },
+        {
+            "aliases": ["ear (3)", "ear 3", "ear3", "ear(3)"],
+            "display_name": "Ear (3)",
+            "link": "https://nothing.tech/products/ear-3"
         },
         {
             "aliases": ["headphone (1)", "headphone 1", "headphone1", "headphone(1)", "headphones (1)", "headphones 1", "headphones1", "headphones(1)"],
