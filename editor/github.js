@@ -1,4 +1,4 @@
-const CLIENT_ID = "Iv1.Ov23liyqmUB7D5ZzIEMo";
+const CLIENT_ID = "Ov23liyqmUB7D5ZzIEMo";
 const REPO = "owner/repo";
 const FILE_PATH = "data/mappings.yaml";
 
