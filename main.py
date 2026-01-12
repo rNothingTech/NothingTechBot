@@ -1,4 +1,4 @@
-import praw, time, json, logging, traceback, configparser, difflib, re, string
+import praw, time, json, logging, traceback, configparser, difflib, re, string, yaml, os
 from datetime import date
 from praw.models import Submission
 
@@ -89,6 +89,10 @@ try:
 except Exception as e:
   print(f"Encountered an exception during startup: {e}")
   quit()
+
+COMMANDS_PATH = "commands.yaml"
+COMMANDS_DATA = {}
+COMMANDS_MTIME = 0
 
 def send_reply(comment, response):
   response = response.replace("<user>", f"u/{comment.author.name}")

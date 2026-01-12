@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bot Mappings Editor</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Bot Mappings Editor</h1>
+    <button id="loginBtn">Login with GitHub</button>
+    <span id="userInfo"></span>
+  </header>
+
+  <main hidden id="app">
+    <table id="mappingsTable">
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Display Name</th>
+          <th>Aliases</th>
+          <th>Link</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <div class="actions">
+      <button id="addBtn">Add Entry</button>
+      <button id="saveBtn">Save (Create PR)</button>
+    </div>
+  </main>
+
+  <!-- Add/Edit Modal -->
+  <div id="modal" class="modal" hidden>
+    <div class="modal-content">
+      <h2>Add Mapping</h2>
+
+      <label>
+        Category
+        <select id="modalCategory"></select>
+      </label>
+
+      <label>
+        Display Name
+        <input id="modalDisplayName" />
+      </label>
+
+      <label>
+        Aliases (comma-separated)
+        <input id="modalAliases" />
+      </label>
+
+      <label>
+        Link
+        <input id="modalLink" />
+      </label>
+
+      <div class="modal-actions">
+        <button id="modalSave">Add</button>
+        <button id="modalCancel">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

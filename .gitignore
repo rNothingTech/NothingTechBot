@@ -2,3 +2,4 @@
 config.json
 config_prod.json
 config_test.json
+.vscode/launch.json
