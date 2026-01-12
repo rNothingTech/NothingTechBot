@@ -1,6 +1,6 @@
 const CLIENT_ID = "Ov23liyqmUB7D5ZzIEMo";
 const REPO = "owner/repo";
-const FILE_PATH = "data/mappings.yaml";
+const FILE_PATH = "commands.yaml";
 
 export function login() {
   window.location.href =
