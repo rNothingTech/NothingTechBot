@@ -131,27 +131,32 @@ tr:hover td {
     background: #f8f9fa;
 }
 
+/* Ensure standard cells align to the middle vertically */
+#mappingsTable td {
+    vertical-align: middle;
+    padding: 8px;
+}
+
+/* Fix the alignment of the Link flex container */
 .link-cell {
     display: flex;
-    align-items: center;
+    align-items: center; /* Vertically centers icon and text */
     gap: 10px;
-}
-
-.link-icon {
-    color: #0969da;
-    cursor: pointer;
-    text-decoration: none;
-}
-
-.link-icon:hover {
-    color: #054ada;
+    height: 100%;       /* Ensures it fills the cell height */
+    min-height: 1.5em;  /* Prevents collapsing */
 }
 
 .link-text {
     flex-grow: 1;
     display: inline-block;
-    min-width: 50px;
-    padding: 4px;
+    outline: none;      /* Removes the blue border on click if you prefer */
+}
+
+/* Ensure the icon doesn't shrink */
+.link-icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
 }
 
 /* Drag & Drop */

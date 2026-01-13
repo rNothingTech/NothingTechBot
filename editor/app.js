@@ -152,19 +152,20 @@ function renderTable(filter = "") {
             tr.dataset.category = category;
             tr.dataset.index = index;
 
+            // Inside renderTable items.forEach...
             tr.innerHTML = `
-        <td class="drag-handle"><i class="fa-solid fa-grip-vertical"></i></td>
-        <td>${category}</td>
-        <td contenteditable="true" data-field="display_name">${escapeHtml(item.display_name)}</td>
-        <td contenteditable="true" data-field="aliases">${escapeHtml(item.aliases.join(", "))}</td>
-        <td class="link-cell">
-            <a href="${item.link}" target="_blank" class="link-icon"><i class="fa-solid fa-link"></i></a>
-            <span contenteditable="true" data-field="link" class="link-text">${escapeHtml(item.link)}</span>
-        </td>
-        <td>
-            <button class="danger delete-btn"><i class="fa-solid fa-trash"></i></button>
-        </td>
-      `;
+                <td class="drag-handle"><i class="fa-solid fa-grip-vertical"></i></td>
+                <td>${category}</td>
+                <td contenteditable="true" data-field="display_name">${escapeHtml(item.display_name)}</td>
+                <td contenteditable="true" data-field="aliases">${escapeHtml(item.aliases.join(", "))}</td>
+                <td class="link-cell">
+                    <a href="${item.link}" target="_blank" class="link-icon"><i class="fa-solid fa-link"></i></a>
+                    <span contenteditable="true" data-field="link" class="link-text">${escapeHtml(item.link)}</span>
+                </td>
+                <td>
+                    <button class="danger delete-btn"><i class="fa-solid fa-trash"></i></button>
+                </td>
+            `;
 
             // Event Listeners for this row
             attachRowEvents(tr, category, index);
