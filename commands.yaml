@@ -469,7 +469,7 @@ link:
       - r/NothingTech wiki
       - NothingTech wiki
     display_name: r/NothingTech Wiki
-    link: https://reddit.com/r/NothingTech/wiki
+    link: https://nothing.wiki
 wiki:
   - aliases:
       - app icons
@@ -484,8 +484,7 @@ wiki:
       - icon pack
       - nothing icon pack
     display_name: Nothing Icon Pack
-    link: >-
-      https://www.reddit.com/r/NothingTech/wiki/faq/nothing-os/#wiki_how_to_make_app_icons_monochrome_.2F_black_and_white
+    link: https://nothing.wiki/faq/nothing-os/#wiki_how_to_make_app_icons_monochrome_.2F_black_and_white
   - aliases:
       - update
       - os update
@@ -493,8 +492,7 @@ wiki:
       - nothing os update
       - should I update
     display_name: Should I update Nothing OS?
-    link: >-
-      https://www.reddit.com/r/NothingTech/wiki/faq/nothing-os/#wiki_should_i_update_to_the_latest_version_of_nothing_os.3F
+    link: https://nothing.wiki/faq/nothing-os/#wiki_should_i_update_to_the_latest_version_of_nothing_os.3F
   - aliases:
       - nfc icon
       - what is this icon
@@ -502,5 +500,4 @@ wiki:
       - nfc
       - the nfc icon
     display_name: The NFC Icon
-    link: >-
-      https://www.reddit.com/r/NothingTech/wiki/faq/nothing-os/#wiki_what_is_this_icon_in_my_status_bar.3F_.28squares_with_inner_circle.29
+    link: https://nothing.wiki/faq/nothing-os/#wiki_what_is_this_icon_in_my_status_bar.3F_.28squares_with_inner_circle.29
