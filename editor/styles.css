@@ -131,6 +131,29 @@ tr:hover td {
     background: #f8f9fa;
 }
 
+.link-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.link-icon {
+    color: #0969da;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.link-icon:hover {
+    color: #054ada;
+}
+
+.link-text {
+    flex-grow: 1;
+    display: inline-block;
+    min-width: 50px;
+    padding: 4px;
+}
+
 /* Drag & Drop */
 .drag-handle {
     cursor: grab;

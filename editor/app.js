@@ -157,9 +157,12 @@ function renderTable(filter = "") {
         <td>${category}</td>
         <td contenteditable="true" data-field="display_name">${escapeHtml(item.display_name)}</td>
         <td contenteditable="true" data-field="aliases">${escapeHtml(item.aliases.join(", "))}</td>
-        <td contenteditable="true" data-field="link"><a href="${item.link}" target="_blank"><i class="fa-solid fa-link"></i></a> ${escapeHtml(item.link)}</td>
+        <td class="link-cell">
+            <a href="${item.link}" target="_blank" class="link-icon"><i class="fa-solid fa-link"></i></a>
+            <span contenteditable="true" data-field="link" class="link-text">${escapeHtml(item.link)}</span>
+        </td>
         <td>
-          <button class="danger delete-btn"><i class="fa-solid fa-trash"></i></button>
+            <button class="danger delete-btn"><i class="fa-solid fa-trash"></i></button>
         </td>
       `;
 
@@ -171,12 +174,12 @@ function renderTable(filter = "") {
 }
 
 function attachRowEvents(tr, category, index) {
-    // 1. Live Editing
+    // 1. Live Editing - updated selector to find the spans
     const inputs = tr.querySelectorAll('[contenteditable]');
-    inputs.forEach(td => {
-        td.onblur = (e) => {
-            const field = td.dataset.field;
-            let val = td.innerText.trim();
+    inputs.forEach(el => {
+        el.onblur = (e) => {
+            const field = el.dataset.field;
+            let val = el.innerText.trim();
 
             // Update State
             if (field === 'aliases') {
@@ -184,8 +187,14 @@ function attachRowEvents(tr, category, index) {
                 yamlData[category][index].aliases = arr;
             } else {
                 yamlData[category][index][field] = val;
+                
+                // If we just edited the link, update the actual <a> tag's href immediately
+                if (field === 'link') {
+                    const iconLink = tr.querySelector('.link-icon');
+                    if (iconLink) iconLink.href = val;
+                }
             }
-            updateSaveButtonState()
+            updateSaveButtonState(); // Ensure the save button check runs
         };
     });
 
