@@ -131,32 +131,29 @@ tr:hover td {
     background: #f8f9fa;
 }
 
-/* Ensure standard cells align to the middle vertically */
+/* Ensure the table cell itself acts as a container */
 #mappingsTable td {
     vertical-align: middle;
     padding: 8px;
+    height: 1px; /* This is a "hack" that forces children with height: 100% to fill the cell */
 }
 
-/* Fix the alignment of the Link flex container */
+/* Updated Link Cell */
 .link-cell {
     display: flex;
-    align-items: center; /* Vertically centers icon and text */
+    align-items: center; 
     gap: 10px;
-    height: 100%;       /* Ensures it fills the cell height */
-    min-height: 1.5em;  /* Prevents collapsing */
+    height: 100%;       
+    min-height: 40px;   /* Match the approximate height of your other rows */
+    box-sizing: border-box;
 }
 
 .link-text {
     flex-grow: 1;
-    display: inline-block;
-    outline: none;      /* Removes the blue border on click if you prefer */
-}
-
-/* Ensure the icon doesn't shrink */
-.link-icon {
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
+    display: block;      /* Changed from inline-block to block */
+    outline: none;
+    word-break: break-all; /* Prevents long URLs from breaking the layout */
+    padding: 4px 0;
 }
 
 /* Drag & Drop */

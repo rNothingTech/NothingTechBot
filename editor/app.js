@@ -197,6 +197,13 @@ function attachRowEvents(tr, category, index) {
             }
             updateSaveButtonState(); // Ensure the save button check runs
         };
+
+        el.onkeydown = (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                el.blur(); // Triggers the save logic
+            }
+        };
     });
 
     // 2. Delete
