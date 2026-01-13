@@ -1,5 +1,5 @@
 const CLIENT_ID = "Ov23liyqmUB7D5ZzIEMo";
-const REPO = "owner/repo";
+const REPO = "AdaaamB/NothingTechBot";
 const FILE_PATH = "commands.yaml";
 
 export function login() {
