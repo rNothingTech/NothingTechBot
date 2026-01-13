@@ -194,7 +194,7 @@ tr.dragging {
 }
 
 .loading-overlay[hidden] {
-  display: none !important;
+    display: none !important;
 }
 .spinner {
     width: 40px;
@@ -211,4 +211,8 @@ tr.dragging {
     100% {
         transform: rotate(360deg);
     }
+}
+
+[hidden] {
+    display: none !important;
 }
