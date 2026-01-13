@@ -152,18 +152,17 @@ function renderTable(filter = "") {
             tr.dataset.category = category;
             tr.dataset.index = index;
 
-            // Inside renderTable items.forEach...
             tr.innerHTML = `
                 <td class="drag-handle"><i class="fa-solid fa-grip-vertical"></i></td>
                 <td>${category}</td>
                 <td contenteditable="true" data-field="display_name">${escapeHtml(item.display_name)}</td>
                 <td contenteditable="true" data-field="aliases">${escapeHtml(item.aliases.join(", "))}</td>
-                <td class="link-cell">
-                    <a href="${item.link}" target="_blank" class="link-icon"><i class="fa-solid fa-link"></i></a>
-                    <span contenteditable="true" data-field="link" class="link-text">${escapeHtml(item.link)}</span>
-                </td>
+                <td contenteditable="true" data-field="link" class="link-cell-text">${escapeHtml(item.link)}</td>
                 <td>
-                    <button class="danger delete-btn"><i class="fa-solid fa-trash"></i></button>
+                    <div class="action-buttons">
+                        <button class="secondary copy-btn" title="Copy Link"><i class="fa-solid fa-copy"></i></button>
+                        <button class="danger delete-btn" title="Delete"><i class="fa-solid fa-trash"></i></button>
+                    </div>
                 </td>
             `;
 
@@ -175,49 +174,57 @@ function renderTable(filter = "") {
 }
 
 function attachRowEvents(tr, category, index) {
-    // 1. Live Editing - updated selector to find the spans
+    // 1. Live Editing (Standardized)
     const inputs = tr.querySelectorAll('[contenteditable]');
     inputs.forEach(el => {
-        el.onblur = (e) => {
+        el.onblur = () => {
             const field = el.dataset.field;
             let val = el.innerText.trim();
 
-            // Update State
             if (field === 'aliases') {
-                const arr = val.split(',').map(s => s.trim()).filter(Boolean);
-                yamlData[category][index].aliases = arr;
+                yamlData[category][index].aliases = val.split(',').map(s => s.trim()).filter(Boolean);
             } else {
                 yamlData[category][index][field] = val;
-                
-                // If we just edited the link, update the actual <a> tag's href immediately
-                if (field === 'link') {
-                    const iconLink = tr.querySelector('.link-icon');
-                    if (iconLink) iconLink.href = val;
-                }
             }
-            updateSaveButtonState(); // Ensure the save button check runs
+            updateSaveButtonState();
         };
-
+        
+        // Prevent new lines on Enter
         el.onkeydown = (e) => {
             if (e.key === 'Enter') {
                 e.preventDefault();
-                el.blur(); // Triggers the save logic
+                el.blur();
             }
         };
     });
 
-    // 2. Delete
+    // 2. Copy Link Logic
+    tr.querySelector('.copy-btn').onclick = () => {
+        const url = yamlData[category][index].link;
+        navigator.clipboard.writeText(url).then(() => {
+            const btn = tr.querySelector('.copy-btn');
+            const icon = btn.querySelector('i');
+            // Visual feedback
+            icon.className = 'fa-solid fa-check';
+            btn.style.color = 'var(--primary)';
+            setTimeout(() => {
+                icon.className = 'fa-solid fa-copy';
+                btn.style.color = '';
+            }, 2000);
+        });
+    };
+
+    // 3. Delete
     tr.querySelector('.delete-btn').onclick = () => {
         if (confirm(`Delete "${yamlData[category][index].display_name}"?`)) {
             yamlData[category].splice(index, 1);
-            // Clean up empty categories if desired
             if (yamlData[category].length === 0) delete yamlData[category];
             renderTable(els.searchInput.value);
-            updateSaveButtonState()
+            updateSaveButtonState();
         }
     };
 
-    // 3. Drag & Drop
+    // 4. Drag & Drop
     tr.ondragstart = e => {
         e.dataTransfer.setData("application/json", JSON.stringify({ category, index }));
         tr.classList.add("dragging");

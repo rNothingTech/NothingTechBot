@@ -131,29 +131,35 @@ tr:hover td {
     background: #f8f9fa;
 }
 
-/* Ensure the table cell itself acts as a container */
+/* Container for Action buttons */
+.action-buttons {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+/* Ensure consistent cell heights and alignment */
 #mappingsTable td {
     vertical-align: middle;
-    padding: 8px;
-    height: 1px; /* This is a "hack" that forces children with height: 100% to fill the cell */
+    padding: 12px 8px;
+    line-height: 1.4;
 }
 
-/* Updated Link Cell */
-.link-cell {
-    display: flex;
-    align-items: center; 
-    gap: 10px;
-    height: 100%;       
-    min-height: 40px;   /* Match the approximate height of your other rows */
-    box-sizing: border-box;
+/* Specific styling for the editable link text */
+.link-cell-text {
+    word-break: break-all;
+    font-family: monospace;
+    font-size: 0.9rem;
+    color: #0969da;
 }
 
-.link-text {
-    flex-grow: 1;
-    display: block;      /* Changed from inline-block to block */
-    outline: none;
-    word-break: break-all; /* Prevents long URLs from breaking the layout */
-    padding: 4px 0;
+.copy-btn {
+    padding: 6px 10px;
+    transition: all 0.2s;
+}
+
+.copy-btn:hover {
+    background: #eef;
 }
 
 /* Drag & Drop */
