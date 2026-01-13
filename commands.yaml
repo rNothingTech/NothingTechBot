@@ -194,7 +194,7 @@ app:
       - notes md
       - notes with markdown
       - "notes: notes with markdown"
-    display_name: Notes: Notes with Markdown by monospace
+    display_name: Notes with Markdown by monospace
     link: https://play.google.com/store/apps/details?id=com.monospace.notes
 
   - aliases:
