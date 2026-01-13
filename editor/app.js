@@ -1,5 +1,5 @@
 import {
-    login,
+    saveToken,
     logout,
     getAccessToken,
     getUser,
@@ -68,7 +68,7 @@ async function bootstrap() {
 
     try {
         const user = await getUser(token);
-        
+
         // Error handling for bad tokens
         if (user.message === "Bad credentials") {
             throw new Error("Invalid GitHub Token. Please clear and try again.");
