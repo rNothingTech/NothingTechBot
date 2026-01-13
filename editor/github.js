@@ -3,11 +3,26 @@ const REPO = "AdaaamB/NothingTechBot";
 const FILE_PATH = "commands.yaml";
 
 export function login() {
+  const redirectUri = window.location.origin + window.location.pathname;
+  const scopes = "repo read:user";
+
   window.location.href =
     `https://github.com/login/oauth/authorize` +
     `?client_id=${CLIENT_ID}` +
-    `&scope=repo` +
-    `&redirect_uri=${location.href}`;
+    `&redirect_uri=${encodeURIComponent(redirectUri)}` +
+    `&scope=${encodeURIComponent(scopes)}` +
+    `&response_type=token`;
+}
+
+export function getAccessToken() {
+  if (window.location.hash.includes("access_token")) {
+    const params = new URLSearchParams(window.location.hash.substring(1));
+    const token = params.get("access_token");
+    localStorage.setItem("gh_token", token);
+    window.location.hash = "";
+    return token;
+  }
+  return localStorage.getItem("gh_token");
 }
 
 export async function getUser(token) {

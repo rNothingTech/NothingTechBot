@@ -6,7 +6,9 @@ import {
   getMainSha,
   createBranch,
   commitFile,
-  openPR
+  openPR,
+  getAccessToken, 
+  fetchYamlFile
 } from "./github.js";
 
 import { parseYaml, dumpYaml } from "./yaml.js";
@@ -39,9 +41,23 @@ const modalCancel = document.getElementById("modalCancel");
 /* ------------------ AUTH ------------------ */
 
 loginBtn.onclick = login;
+async function bootstrap() {
+  token = getAccessToken();
 
-token = new URLSearchParams(window.location.hash.substring(1)).get("access_token");
-if (token) init();
+  if (!token) {
+    // Not logged in yet; show login button only
+    return;
+  }
+
+  try {
+    await init();
+  } catch (err) {
+    console.error(err);
+    alert("Failed to load data. Check console.");
+  }
+}
+
+bootstrap();
 
 /* ------------------ INIT ------------------ */
 
