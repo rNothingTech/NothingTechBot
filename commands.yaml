@@ -35,7 +35,7 @@ toy:
       - counter
       - counting
     display_name: Counter by Daniel
-    link: https://nothing.community/d/36837-introducing-counter-a-glyph-toy
+    link: https://github.com/kustomq/counter_glyph_toy_public_release
   - aliases:
       - dot hub
       - dothub
