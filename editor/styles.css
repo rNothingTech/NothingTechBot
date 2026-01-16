@@ -193,6 +193,12 @@ tr.dragging {
     width: 400px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
+.modal-content small {
+    display: block;
+    color: #666;
+    margin-top: 4px;
+    font-size: 0.8rem;
+}
 .modal-content label {
     display: block;
     margin-bottom: 1rem;

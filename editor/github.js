@@ -1,5 +1,5 @@
 const CLIENT_ID = "Ov23liyqmUB7D5ZzIEMo";
-const REPO = "AdaaamB/NothingTechBot";
+const REPO = "rNothingTech/NothingTechBot";
 const FILE_PATH = "commands.yaml"; // Defined in root as per prompt
 
 export function saveToken(token) {

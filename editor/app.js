@@ -295,12 +295,27 @@ els.modalSave.onclick = () => {
     }
 
     // Duplicate Check
-    const allAliases = [];
-    Object.values(yamlData).flat().forEach(i => allAliases.push(...i.aliases));
-    const conflicts = aliases.filter(a => allAliases.includes(a));
+    const aliasConflicts = [];
+    Object.entries(yamlData).forEach(([existingCat, items]) => {
+        items.forEach(item => {
+            item.aliases.forEach(existingAlias => {
+                if (aliases.includes(existingAlias)) {
+                    aliasConflicts.push({
+                        alias: existingAlias,
+                        category: existingCat,
+                        name: item.display_name
+                    });
+                }
+            });
+        });
+    });
 
-    if (conflicts.length > 0) {
-        if (!confirm(`Warning: The alias(es) "${conflicts.join(', ')}" already exist. Add anyway?`)) {
+    if (aliasConflicts.length > 0) {
+        const conflictMsgs = aliasConflicts.map(c => 
+            `• "${c.alias}" (found in ${c.category} > ${c.name})`
+        ).join('\n');
+
+        if (!confirm(`Warning: The following aliases already exist:\n\n${conflictMsgs}\n\nDo you still want to add this command?`)) {
             return;
         }
     }
