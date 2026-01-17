@@ -1,5 +1,6 @@
 glyph:
   - aliases:
+      - tones
       - glyphtones
       - ringtones
       - glyph tones
@@ -30,6 +31,15 @@ glyph:
       - glyph visualizer
     display_name: GlyphVisualizer by SebiAi
     link: https://github.com/SebiAi/GlyphVisualizer
+  - display_name: Better Nothing Music Vizualizer by Aleks Levet
+    aliases:
+      - viz
+      - visualizer
+      - vizualizer
+      - visualiser
+      - music
+      - better music visualizer
+    link: https://github.com/Aleks-Levet/better-nothing-music-visualizer/tree/main
 toy:
   - aliases:
       - counter
@@ -54,6 +64,7 @@ toy:
       - glyph beat
       - beat visualiser
       - beat visualizer
+      - duck
     display_name: Glyph Beat by pauwma
     link: https://play.google.com/store/apps/details?id=com.pauwma.glyphbeat
   - aliases:
@@ -61,6 +72,7 @@ toy:
       - glyph bike
       - bike game
       - glyph bike game
+      - game
     display_name: Glyph Bike by Ofishial Digital
     link: https://play.google.com/store/apps/details?id=com.ofishialdigital.glyphbike
   - aliases:
