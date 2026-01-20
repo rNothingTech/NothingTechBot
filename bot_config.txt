@@ -6,9 +6,9 @@ bug_regex_match_wiki_page_name = bug_regex_match
 solved_response = Thank you <user>, I've marked this thread as solved. If this is incorrect, please revert the flair back.
 answer_response = Thank you <user>, I've marked this comment as the answer and the thread as solved. If this is incorrect, please revert the flair back.
 remove_words = nothing, nothing's, about, on, page, the, to, too, btw, fyi, for, app, toy
-footer = ^(I'm a bot. Something wrong? Suggestions?) [^(Message the Mods)](https://www.reddit.com/message/compose?to=/r/NothingTech&subject=Bot+feedback)^. ^| ^View [^(all bot commands)](https://www.reddit.com/r/NothingTech/wiki/faq/reddit/bot)^.
-wiki_no_match_footer = Head to the [r/NothingTech wiki index page](https://www.reddit.com/r/NothingTech/wiki/) to browse our full wiki.
-link_no_match_footer = View the [Official Links wiki page](https://www.reddit.com/r/NothingTech/wiki/library/official-links) for a list of some of the official links.
-wiki_footer = Find the **[the entire r/NothingTech wiki](https://reddit.com/r/NothingTech/wiki)** at the top of r/NothingTech on mobile, or the sidebar on desktop.
-app_footer = Find a full list of community-created apps on **[the r/NothingTech wiki](https://www.reddit.com/r/NothingTech/wiki/library/community-apps/)**.
-glyph_footer = Find a full list of community-created Glyph projects on **[the r/NothingTech wiki](https://www.reddit.com/r/NothingTech/wiki/library/glyph-projects/)**.
+footer = ^(I'm a bot. Something wrong? Suggestions?) [^(Message the Mods)](https://www.reddit.com/message/compose?to=/r/NothingTech&subject=Bot+feedback)^. ^| ^View [^(all bot commands)](https://nothing.wiki/faq/reddit/bot)^.
+wiki_no_match_footer = Head to the [r/NothingTech wiki index page](https://nothing.wiki) to browse our full wiki.
+link_no_match_footer = View the [Official Links wiki page](https://nothing.wiki/library/official-links) for a list of some of the official links.
+wiki_footer = Find the **[the entire r/NothingTech wiki](https://nothing.wiki)** at the top of r/NothingTech on mobile, or the sidebar on desktop.
+app_footer = Find a full list of community-created apps on **[the r/NothingTech wiki](https://nothing.wiki/library/community-apps/)**.
+glyph_footer = Find a full list of community-created Glyph projects on **[the r/NothingTech wiki](https://nothing.wiki/library/glyph-projects/)**.
