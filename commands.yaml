@@ -886,3 +886,34 @@ wiki:
       - r/nothingtech megathreads
       - r/nothingtech megathread directory
     link: https://nothing.wiki/megathreads/
+firmware:
+  - aliases:
+      - downgrade
+      - flash stock rom
+      - unbrick
+      - rollback
+    display_name: Restore or Downgrade Stock Nothing OS Firmware
+    link: https://github.com/spike0en/nothing_archive#flashing-the-stock-rom-using-fastboot
+  - aliases:
+      - flashing script
+      - nothing flasher
+    display_name: Nothing Flasher Script
+    link: https://github.com/spike0en/nothing_flasher
+  - aliases:
+      - ota images
+      - stock rom
+    display_name: Community Maintained Stock Nothing OS Firmware Repository
+    link: https://github.com/spike0en/nothing_archive
+  - aliases:
+      - ota
+      - ota update
+      - sideload
+      - sideload update
+      - update manually
+    display_name: Sideload Nothing OS Updates
+    link: https://github.com/spike0en/nothing_archive#ota-sideloading
+  - aliases:
+      - root
+      - rooting
+    display_name: Rooting Guide For Nothing & CMF Devices
+    link: https://github.com/spike0en/nothing_archive#rooting
