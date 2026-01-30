@@ -181,8 +181,10 @@ def link_commands(type, search_data, comment_body):
     elif type == "link":
         return ("You can view all of Nothing's official links here: https://reddit.com/mod/NothingTech/wiki/library/official-links\n\n"
               "You can also use this command to find specific links, e.g. `!link phone (3a)` or `!link nothing discord`.")
+    elif type == "firmware":
+        return ("You can view the main community-maintained stock Nothing OS Firmware Repository here: https://github.com/spike0en/nothing_archive\n\n"
+              "You can also use this command to find specific topics, e.g. `!firmware root` or `!firmware unbrick`.")  
       
-
   argument = sanitise_command(argument)
   logger.info(f"!{type} request for {argument} found")
 
@@ -341,8 +343,8 @@ while True:
             response = f"u/{comment.parent().author.name}, be sure to submit bugs and feedback requests through your phone's Settings > System > Feedback menu."
             send_reply(comment, response)
 
-        # check for !link, !wiki, !glyph or !app in the body of a comment and respond with the relevant link
-        json_commands = ["!link", "!linkme", "!wiki", "!faq", "!glyph", "!glyphs", "!app", "!apps", "!toy", "!toys"]
+        # check for !link, !wiki, !glyph, !firmware or !app in the body of a comment and respond with the relevant link
+        json_commands = ["!link", "!linkme", "!wiki", "!faq", "!glyph", "!glyphs", "!app", "!apps", "!toy", "!toys", "!firmware"]
         matched_link_command = next((cmd for cmd in json_commands if cmd in body), None)
         if matched_link_command:
           logger.info(f"{matched_link_command} found, checking type")
@@ -357,6 +359,8 @@ while True:
             command_type = "app"
           elif matched_link_command == "!toy" or matched_link_command ==  "!toys":
             command_type = "toy"
+          elif matched_link_command == "!firmware":
+            command_type = "firmware"
 
           logger.info(f"Command type: {command_type}, checking if quoted")
           if not is_command_quoted(body, f"!{command_type}"):
