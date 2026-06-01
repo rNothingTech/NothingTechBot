@@ -616,7 +616,7 @@ wiki:
       - phone charger
       - best phone chargers
       - best phone charger
-    link: https://nothing.wiki/faq/phone/#wiki_which_charger_is_best_to_use_with_my_nothing_phone.3F
+    link: https://www.reddit.com/r/NothingTech/wiki/faq/phone/
   - display_name: Phone/camera rattling
     aliases:
       - rattle
@@ -643,6 +643,17 @@ wiki:
       - glyph toy
       - glyph toys
     link: https://nothing.wiki/faq/phone-3/#wiki_how_do_i_interact_with_the_glyph_matrix_.2F_glyph_toys.3F
+  - display_name: Using Glyph Mirror
+    aliases:
+      - using glyph mirror
+      - glyph mirror
+      - glyph matrix mirror
+      - matrix mirror
+      - glyph mirror selfie
+      - glyph selfie
+      - matrix selfie
+      - use glyph mirror
+    link: https://nothing.wiki/faq/phone-3/#wiki_how_do_i_use_glyph_mirror.3F
   - display_name: Choosing & Reordering Glyph Toys
     aliases:
       - choosing glyph toys
@@ -655,17 +666,6 @@ wiki:
       - add glyph toys
       - add glyph toy
     link: https://nothing.wiki/faq/phone-3/#wiki_how_do_i_choose_which_glyph_toys_i_want_to_use.3F
-  - display_name: Using Glyph Mirror
-    aliases:
-      - using glyph mirror
-      - glyph mirror
-      - glyph matrix mirror
-      - matrix mirror
-      - glyph mirror selfie
-      - glyph selfie
-      - matrix selfie
-      - use glyph mirror
-    link: https://nothing.wiki/faq/phone-3/#wiki_how_do_i_use_glyph_mirror.3F
   - display_name: Community Glyph Toys
     aliases:
       - community glyph toys
