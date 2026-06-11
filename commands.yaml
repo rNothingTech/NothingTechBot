@@ -39,6 +39,7 @@ glyph:
       - visualiser
       - music
       - better music visualizer
+      - bnmv
     link: https://github.com/Aleks-Levet/better-nothing-music-visualizer/tree/main
 toy:
   - aliases:
@@ -297,6 +298,15 @@ app:
       - circle
       - language app
     link: https://play.google.com/store/apps/details?id=com.quivaconnect.thecircle
+  - display_name: Better Nothing Music Vizualizer by Aleks Levet
+    aliases:
+      - bnmv
+      - better nothing music
+      - better viz
+      - viz
+      - muzic viz
+      - aleks levet
+    link: https://github.com/Aleks-Levet/better-nothing-music-visualizer
 link:
   - aliases:
       - phone (1)
