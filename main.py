@@ -306,6 +306,41 @@ while True:
           else:
             logger.debug("!solved found but author is not OP or a mod, ignoring")
 
+        # Detect phrases such as:
+        # "it's working", "it is working", "it is finally fixed", "everything is resolved"
+        # "the issue is fixed", "the problem is now solved", "the bug is resolved"
+        # "it works now", "working again", "works properly", "working perfectly"
+        # "fixed it", "solved the issue", "resolved the problem", "got it working"
+        # "have got this working", "managed to get it working", "this did the trick"
+        # "everything is good now", "all is working now", "no longer having the issue"
+        # "thank you, it's good", "thanks, it is working", "thank you, it worked"
+        # "thanks, this worked", "appreciate it, that worked", "you're the goat"
+        # "you are the goat", "this was it", "that was the fix"
+        # "thanks, that fixed it", "you're a lifesaver, this fixed it"
+        solved_detected_patterns = [
+          r"\bit['’]?s working\b",
+          r"\bit is working\b",
+          r"\b(?:it|everything) is (?:finally )?(?:working|fixed|sorted|resolved)\b",
+          r"\b(?:the )?(?:issue|problem|bug) is (?:now )?(?:fixed|solved|resolved)\b",
+          r"\b(?:works?|working) (?:now|again|properly|perfectly)\b",
+          r"\b(?:fixed|solved|resolved) (?:it|the issue|the problem|the bug)\b",
+          r"\b(?:got|have got|managed to get) (?:it|this) working\b",
+          r"\b(?:that|this) did the trick\b",
+          r"\b(?:all|everything) is (?:good|working) now\b",
+          r"\b(?:no longer|not anymore) (?:having )?(?:the )?(?:issue|problem|bug)\b",
+          r"\bthank(?:s| you)\b[,.]?\s+(?:it['’]?s|it is) (?:good|working|fixed|solved|resolved)\b",
+          r"\bthank(?:s| you)\b[,.]?\s+it worked\b",
+          r"\b(?:thank(?:s| you)|appreciate it)\b[,.]?\s+(?:that|this) worked\b",
+          r"\b(?:you['’]?re|you are) the goat\b",
+          r"\b(?:this|that) was it\b",
+          r"\b(?:this|that) was the fix\b",
+          r"\b(?:thank(?:s| you)|you['’]?re a lifesaver)\b[,.]?\s+(?:that|this) fixed it\b",
+        ]
+        if any(re.search(pattern, body) for pattern in solved_detected_patterns) and comment.author == comment.submission.author:
+          send_reply(comment, config_wiki['solved_detected'])
+            
+        
+
         # check for !answer in the body of a comment from OP or a mod of a submission, set solved flair and comment the solution
         if "!answer" in body and (comment.author == comment.submission.author or any(mod.name == comment.author.name for mod in subreddit_mods)):
           logger.info("!answer found, checking if quoted")

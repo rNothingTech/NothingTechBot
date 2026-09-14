@@ -12,4 +12,4 @@ link_no_match_footer = View the [Official Links wiki page](https://nothing.wiki/
 wiki_footer = Find the **[the entire r/NothingTech wiki](https://nothing.wiki)** at the top of r/NothingTech on mobile, or the sidebar on desktop.
 app_footer = Find a full list of community-created apps on **[the r/NothingTech wiki](https://nothing.wiki/library/community-apps/)**.
 glyph_footer = Find a full list of community-created Glyph projects on **[the r/NothingTech wiki](https://nothing.wiki/library/glyph-projects/)**.
-solved_detected = Hey, sounds like you solved your issue! If you did, feel free to reply with the `!solved` command! If you want to pin the correct answer to the top of your post, reply the command `!answer` to the comment you want to pin.
+solved_detected = # Hey, sounds like you solved your issue! \n## If you did, feel free to reply with the `!solved` command! \nIf you want to pin the correct answer to the top of your post, reply the command `!answer` to the comment you want to pin.
