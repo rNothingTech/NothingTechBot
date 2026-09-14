@@ -13,3 +13,6 @@ wiki_footer = Find the **[the entire r/NothingTech wiki](https://nothing.wiki)**
 app_footer = Find a full list of community-created apps on **[the r/NothingTech wiki](https://nothing.wiki/library/community-apps/)**.
 glyph_footer = Find a full list of community-created Glyph projects on **[the r/NothingTech wiki](https://nothing.wiki/library/glyph-projects/)**.
 solved_detected = # Hey, sounds like you solved your issue! \n## If you did, feel free to reply with the `!solved` command! \nIf you want to pin the correct answer to the top of your post, reply the command `!answer` to the comment you want to pin.
+flair_usage_response = Use `!flair <text>` to set your user flair, for example: `!flair Nothing Phone (3a)`.
+flair_too_long_response = Your flair is too long. Please keep it to 64 characters or fewer.
+flair_set_response = Your user flair has been set to `<flair>`.

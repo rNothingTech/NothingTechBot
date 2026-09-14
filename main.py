@@ -289,6 +289,18 @@ while True:
         # check if the comment is the bot's
         if comment.author.name == reddit.user.me():
           continue
+
+        # check for !flair and set the invoking user's flair text
+        # I can't access the user flair list in my mod tools so can't use the flair template thing sadly
+        if "!flair" in body and not is_command_quoted(body, "!flair"):
+          flair_text = (flair_match.group(1) or "").strip()
+          if not flair_text:
+            send_reply(comment, config_wiki['flair_usage_response'])
+          elif len(flair_text) > 64:
+            send_reply(comment, config_wiki['flair_too_long_response'])
+          else:
+            subreddit.flair.set(comment.author, text=flair_text)
+            send_reply(comment, config_wiki['flair_set_response'].replace('<flair>', flair_text))
       
         # check for !solved in the body of a comment from OP or a mod of a submission, set solved flair
         if "!solved" in body and (comment.author == comment.submission.author or any(mod.name == comment.author.name for mod in subreddit_mods)):
