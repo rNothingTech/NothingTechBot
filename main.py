@@ -290,10 +290,12 @@ while True:
         if comment.author.name == reddit.user.me():
           continue
 
-        # check for !flair and set the invoking user's flair text
+        # check for !flair and set the user's flair text
         # I can't access the user flair list in my mod tools so can't use the flair template thing sadly
         if "!flair" in body and not is_command_quoted(body, "!flair"):
-          flair_text = (flair_match.group(1) or "").strip()
+          startidx = body.find("!flair") + len("!flair")
+          endidx = body.find("\n", startidx)
+          flair_text = comment.body[startidx:endidx].strip() if endidx != -1 else comment.body[startidx:].strip()
           if not flair_text:
             send_reply(comment, config_wiki['flair_usage_response'])
           elif len(flair_text) > 64:
