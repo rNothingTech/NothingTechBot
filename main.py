@@ -96,6 +96,7 @@ except Exception as e:
 commands_path = "commands.yaml"
 commands_data = {}
 commands_mtime = 0
+config_regex = config_parser['regex']
 
 def fetch_yaml_from_github():
   while True:
@@ -331,29 +332,11 @@ while True:
         # "thanks, this worked", "appreciate it, that worked", "you're the goat"
         # "you are the goat", "this was it", "that was the fix"
         # "thanks, that fixed it", "you're a lifesaver, this fixed it"
-        solved_detected_patterns = [
-          r"\bit['’]?s working\b",
-          r"\bit is working\b",
-          r"\b(?:it|everything) is (?:finally )?(?:working|fixed|sorted|resolved)\b",
-          r"\b(?:the )?(?:issue|problem|bug) is (?:now )?(?:fixed|solved|resolved)\b",
-          r"\b(?:works?|working) (?:now|again|properly|perfectly)\b",
-          r"\b(?:fixed|solved|resolved) (?:it|the issue|the problem|the bug)\b",
-          r"\b(?:got|have got|managed to get) (?:it|this) working\b",
-          r"\b(?:that|this) did the trick\b",
-          r"\b(?:all|everything) is (?:good|working) now\b",
-          r"\b(?:no longer|not anymore) (?:having )?(?:the )?(?:issue|problem|bug)\b",
-          r"\bthank(?:s| you)\b[,.]?\s+(?:it['’]?s|it is) (?:good|working|fixed|solved|resolved)\b",
-          r"\bthank(?:s| you)\b[,.]?\s+it worked\b",
-          r"\b(?:thank(?:s| you)|appreciate it)\b[,.]?\s+(?:that|this) worked\b",
-          r"\b(?:you['’]?re|you are) the goat\b",
-          r"\b(?:this|that) was it\b",
-          r"\b(?:this|that) was the fix\b",
-          r"\b(?:thank(?:s| you)|you['’]?re a lifesaver)\b[,.]?\s+(?:that|this) fixed it\b",
-        ]
+        solved_detected_patterns = config_regex['solved_detected_patterns'].split(',')
+        solved_detected_patterns = [pattern.strip() for pattern in solved_detected_patterns]
         if any(re.search(pattern, body) for pattern in solved_detected_patterns) and comment.author == comment.submission.author:
           send_reply(comment, config_wiki['solved_detected'])
-            
-        
+          
 
         # check for !answer in the body of a comment from OP or a mod of a submission, set solved flair and comment the solution
         if "!answer" in body and (comment.author == comment.submission.author or any(mod.name == comment.author.name for mod in subreddit_mods)):
