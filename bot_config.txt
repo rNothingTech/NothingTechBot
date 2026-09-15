@@ -16,7 +16,7 @@ solved_detected = Hey, sounds like you solved your issue! If you did, feel free 
 flair_usage_response = Use `!flair <text>` to set your user flair, for example: `!flair Nothing Phone (3a)`.
 flair_too_long_response = Your flair is too long. Please keep it to 64 characters or fewer.
 flair_set_response = Your user flair has been set to `<flair>`.
-flair_suggestion = Hey, sounds like you have a `<device>`, you can put it next to your name by replying to this comment with `!flair <device>` or `!flair <device_code>`!
+flair_suggestion = Hey, sounds like you have a `<device>`, you can put it next to your name by replying to this comment with `!flair <device>` or `!flair <device_code>`! (anyone can do this, not only the parent commenter)
 
 np1 = Phone (1)
 np2 = Phone (2)
