@@ -34,3 +34,23 @@ e1 = Ear (1)
 e2 = Ear (2)
 e2024 = Ear (2024)
 e3 = Ear (3)
+
+[regex]
+solved_detected_patterns = 
+    \bit['']?s working\b,
+    \bit is working\b,
+    \b(?:it|everything) is (?:finally )?(?:working|fixed|sorted|resolved)\b,
+    \b(?:the )?(?:issue|problem|bug) is (?:now )?(?:fixed|solved|resolved)\b,
+    \b(?:works?|working) (?:now|again|properly|perfectly)\b,
+    \b(?:fixed|solved|resolved) (?:it|the issue|the problem|the bug)\b,
+    \b(?:got|have got|managed to get) (?:it|this) working\b,
+    \b(?:that|this) did the trick\b,
+    \b(?:all|everything) is (?:good|working) now\b,
+    \b(?:no longer|not anymore) (?:having )?(?:the )?(?:issue|problem|bug)\b,
+    \bthank(?:s| you)\b[,.]?\s+(?:it['']?s|it is) (?:good|working|fixed|solved|resolved)\b,
+    \bthank(?:s| you)\b[,.]?\s+it worked\b,
+    \b(?:thank(?:s| you)|appreciate it)\b[,.]?\s+(?:that|this) worked\b,
+    \b(?:you['']?re|you are) the goat\b,
+    \b(?:this|that) was it\b,
+    \b(?:this|that) was the fix\b,
+    \b(?:thank(?:s| you)|you['']?re a lifesaver)\b[,.]?\s+(?:that|this) fixed it\b
