@@ -67,7 +67,7 @@
     "e2": "Ear (2)",
     "e2024": "Ear (2024)",
     "e3": "Ear (3)"
-  }
+  },
     
 
     "solved_detected_patterns": [
@@ -88,7 +88,7 @@
         "\\b(?:this|that) was it\\b",
         "\\b(?:this|that) was the fix\\b",
         "\\b(?:thank(?:s| you)|you['’]?re a lifesaver)\\b[,.]?\\s+(?:that|this) fixed it\\b"
-     ]
+     ],
 
     "github_raw_url": "https://raw.githubusercontent.com/rNothingTech/NothingTechBot/main/commands.yaml",
     "github_fetch_interval_seconds": 300,
