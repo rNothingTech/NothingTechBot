@@ -95,7 +95,6 @@
 
     "bool_send_response": true,
 
-    //10 = DEBUG, 20 = INFO, 30 = WARNING, 40 = ERROR
     "log_level_terminal": 20,
     "log_level_file": 20,
     "log_level_api": 20,
