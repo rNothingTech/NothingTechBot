@@ -96,8 +96,6 @@ except Exception as e:
 commands_path = "commands.yaml"
 commands_data = {}
 commands_mtime = 0
-with open("config_blank.json", "r", encoding="utf-8") as f:
-    config_regex = json.load(f)
 
 def fetch_yaml_from_github():
   while True:
@@ -333,7 +331,7 @@ while True:
         # "thanks, this worked", "appreciate it, that worked", "you're the goat"
         # "you are the goat", "this was it", "that was the fix"
         # "thanks, that fixed it", "you're a lifesaver, this fixed it"
-        solved_detected_patterns = config_regex["solved_detected_patterns"]
+        solved_detected_patterns = config["solved_detected_patterns"]
 
         if (
           any(re.search(pattern, body, re.IGNORECASE) for pattern in solved_detected_patterns)
