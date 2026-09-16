@@ -86,6 +86,7 @@ commands_path = "commands.yaml"
 commands_data = {}
 commands_mtime = 0
 solved_detected_patterns = config['solved_detected_patterns']
+device_detection_patterns = config.get('device_detection_patterns', [])
 
 def fetch_yaml_from_github():
   while True:
@@ -142,6 +143,30 @@ def is_command_quoted(comment_body, command) -> bool:
   pattern = rf"""(\\)*([\"'`])\s*{command}\s*\1*\2"""
 
   return bool(re.search(pattern, comment_body))
+
+def device_name_pattern(device_name):
+  parts = re.findall(r'[a-z0-9]+', device_name.lower())
+  if len(parts) == 1:
+    return re.escape(parts[0])
+  model_pattern = re.escape(parts[1]) + r'\s*\)?'
+  return re.escape(parts[0]) + r'\s*\(?\s*' + model_pattern + ''.join(r'\s+' + re.escape(part) for part in parts[2:])
+
+def find_detected_device(comment_body):
+  devices = sorted(config['devices'].items(), key=lambda item: len(item[1]), reverse=True)
+  for device_code, device_name in devices:
+    device_pattern = device_name_pattern(device_name)
+    for pattern in device_detection_patterns:
+      if re.search(pattern.replace('{device}', device_pattern), comment_body, re.IGNORECASE):
+        return device_code, device_name
+  return None
+
+def user_has_flair(subreddit, user):
+  try:
+    flair = subreddit.flair.get(user)
+    return bool(flair and flair.get('flair_text', '').strip())
+  except Exception as e:
+    logger.warning(f"Unable to read flair for {user}: {e}")
+    return False
 
 def sanitise_command(argument):
   # remove words
@@ -297,6 +322,13 @@ while True:
             flair_user = comment.parent().author if is_mod else comment.author
             subreddit.flair.set(flair_user, text=flair_text)
             send_reply(comment, config_wiki['flair_set_response' if is_mod else 'flair_mod_set_response'].replace('<flair>', flair_text))
+
+        if not user_has_flair(subreddit, comment.author):
+            detected_device = find_detected_device(body)
+            if detected_device:
+              device_code, device_name = detected_device
+              response = config_wiki['flair_suggestion'].replace('<device>', device_name).replace('<device_code>', device_code)
+              send_reply(comment, response)
       
         # check for !solved in the body of a comment from OP or a mod of a submission, set solved flair
         if "!solved" in body and (comment.author == comment.submission.author or any(mod.name == comment.author.name for mod in subreddit_mods)):
