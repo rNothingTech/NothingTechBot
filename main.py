@@ -291,8 +291,12 @@ while True:
           elif len(flair_text) > 64:
             send_reply(comment, config_wiki['flair_too_long_response'])
           else:
-            subreddit.flair.set(comment.author, text=flair_text)
-            send_reply(comment, config_wiki['flair_set_response'].replace('<flair>', flair_text))
+            # If you're a mod, "!flair" sets the parent commenters flair, 
+            # if not, it sets the flair of the guy who summoned the bot
+            is_mod = any(mod.name == comment.author.name for mod in subreddit_mods)
+            flair_user = comment.parent().author if is_mod else comment.author
+            subreddit.flair.set(flair_user, text=flair_text)
+            send_reply(comment, config_wiki['flair_set_response' if is_mod else 'flair_mod_set_response'].replace('<flair>', flair_text))
       
         # check for !solved in the body of a comment from OP or a mod of a submission, set solved flair
         if "!solved" in body and (comment.author == comment.submission.author or any(mod.name == comment.author.name for mod in subreddit_mods)):

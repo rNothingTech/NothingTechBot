@@ -46,7 +46,7 @@
     "flair_usage_response": "Use `!flair <text>` to set your user flair, for example: `!flair Nothing Phone (3a)`.",
     "flair_too_long_response": "Your flair is too long. Please keep it to 64 characters or fewer.",
     "flair_set_response": "Your user flair has been set to `<flair>` succesfully. It might take time for you to see the changes due to Reddit's limitations.",
-    "flair_mod_set_response": "The user flair of <user> has been set to `<flair>` succesfully. It might take time for you to see the changes due to Reddit's limitations. By the way, as a member, you can use the `!flair` command too to set your flair yourself.",
+    "flair_mod_set_response": "The user flair of <user> has been set to `<flair>` succesfully. It might take time for you to see the changes due to Reddit's limitations. By the way, as a member, you can use the `!flair` command too to set your flair yourself!",
     "flair_suggestion": "Hey, sounds like you have a `<device>`, you can put it next to your name by replying to this comment with `!flair <device>` or `!flair <device_code>`! (anyone can do this, not only the parent commenter)"
   },
 
