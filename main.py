@@ -160,6 +160,15 @@ def find_detected_device(comment_body):
         return device_code, device_name
   return None
 
+def replace_device_codes(flair_text):
+  devices = config['devices']
+  device_codes = sorted(devices, key=len, reverse=True)
+  if not device_codes:
+    return flair_text
+
+  pattern = r'(?<!\w)(?:' + '|'.join(map(re.escape, device_codes)) + r')(?!\w)'
+  return re.sub(pattern, lambda match: devices[match.group(0).lower()], flair_text, flags=re.IGNORECASE)
+
 def user_has_flair(subreddit, user):
   try:
     flair = subreddit.flair.get(user)
@@ -311,6 +320,7 @@ while True:
           startidx = body.find("!flair") + len("!flair")
           endidx = body.find("\n", startidx)
           flair_text = comment.body[startidx:endidx].strip() if endidx != -1 else comment.body[startidx:].strip()
+          flair_text = replace_device_codes(flair_text)
           if not flair_text:
             send_reply(comment, config_wiki['flair_usage_response'])
           elif len(flair_text) > 64:
