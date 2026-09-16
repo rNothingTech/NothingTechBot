@@ -75,18 +75,7 @@ try:
     else:
       logger.debug(f"Subreddit: {subreddit_name} has no moderators or could not be fetched.")
   
-  with open('bot_config.txt', 'r') as bot_config_file:
-    config_wiki_page = bot_config_file.read().strip()
-
-  # config_wiki_page = first_subreddit.wiki[bot_config_wiki_page].content_md.strip()
-  config_parser = configparser.ConfigParser()
-  config_parser.read_string(config_wiki_page)
-  config_wiki = config_parser['bot']
-
-  support_regex_match_wiki_page = first_subreddit.wiki[config_wiki['support_regex_match_wiki_page_name']]
-  support_regex_exclude_wiki_page = first_subreddit.wiki[config_wiki['support_regex_exclude_wiki_page_name']]
-  support_match_patterns = support_regex_match_wiki_page.content_md.strip().split('\n')
-  support_exclude_patterns = support_regex_exclude_wiki_page.content_md.strip().split('\n')
+  config_wiki = config['bot']
   
   logger.info(f"Init complete: logged in as {reddit_username} monitoring {subreddit_names}")
 except Exception as e:
@@ -96,6 +85,7 @@ except Exception as e:
 commands_path = "commands.yaml"
 commands_data = {}
 commands_mtime = 0
+solved_detected_patterns = config['solved_detected_patterns']
 
 def fetch_yaml_from_github():
   while True:
@@ -155,7 +145,7 @@ def is_command_quoted(comment_body, command) -> bool:
 
 def sanitise_command(argument):
   # remove words
-  remove_words = config_wiki['remove_words'].split(', ')
+  remove_words = config_wiki['remove_words']
   pattern = r'\b(?:' + '|'.join(map(re.escape, remove_words)) + r')\b'
   argument = re.sub(pattern, '', argument, flags=re.IGNORECASE)
 
@@ -331,13 +321,8 @@ while True:
         # "thanks, this worked", "appreciate it, that worked", "you're the goat"
         # "you are the goat", "this was it", "that was the fix"
         # "thanks, that fixed it", "you're a lifesaver, this fixed it"
-        solved_detected_patterns = config["solved_detected_patterns"]
-
-        if (
-          any(re.search(pattern, body, re.IGNORECASE) for pattern in solved_detected_patterns)
-          and comment.author == comment.submission.author
-        ):
-            send_reply(comment, config_wiki["solved_detected"])
+        if any(re.search(pattern, body) for pattern in solved_detected_patterns) and comment.author == comment.submission.author:
+          send_reply(comment, config_wiki['solved_detected'])
           
 
         # check for !answer in the body of a comment from OP or a mod of a submission, set solved flair and comment the solution
@@ -394,7 +379,7 @@ while True:
           logger.info("!support found, checking if quoted")
           if not is_command_quoted(body, "!support"):
             logger.info("not quoted, responding with support links")
-            response = f"u/{comment.parent().author.name}, here's how to get in touch with Nothing support:\n\n* Visit the [Nothing Support Centre](https://nothing.tech/pages/support-centre) and press the blue chat icon for live chat support (region and time dependent).\n* Visit the [Nothing Customer Support](https://nothing.tech/pages/contact-support) page to get in contact via web form.\n* Contact [\@NothingSupport on X](https://x.com/NothingSupport).\n* Send a direct message to [u/nothing_support](https://reddit.com/u/nothing_support)."
+            response = f"u/{comment.parent().author.name}, here's how to get in touch with Nothing support:\n\n* Visit the [Nothing Support Centre](https://nothing.tech/pages/support-centre) and press[...]
             send_reply(comment, response)
 
         # check for !bug or !feedback in the body of a comment and respond with support links
