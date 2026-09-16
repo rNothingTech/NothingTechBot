@@ -66,7 +66,10 @@
     "e1": "Ear (1)",
     "e2": "Ear (2)",
     "e2024": "Ear (2024)",
-    "e3": "Ear (3)"
+    "ea": "Ear (a)",
+    "e3": "Ear (3)",
+    "e3a": "Ear (3a)",
+    "eo": "Ear (open)"
   },
     
 
@@ -89,6 +92,12 @@
         "\\b(?:this|that) was the fix\\b",
         "\\b(?:thank(?:s| you)|you['’]?re a lifesaver)\\b[,.]?\\s+(?:that|this) fixed it\\b"
      ],
+
+    "device_detection_patterns": [
+      "\\b(?:i\\s+(?:have|own|use)|i['’]?m\\s+using|my|on\\s+my|using|with)\\s+(?:a|an|the)?\\s*{device}\\b",
+      "\\b{device}\\s+(?:user|owner)\\b",
+      "\\b(?:switched\\s+to|upgraded\\s+to|moved\\s+to)\\s+(?:a|an|the)?\\s*{device}\\b"
+    ],
 
     "github_raw_url": "https://raw.githubusercontent.com/rNothingTech/NothingTechBot/main/commands.yaml",
     "github_fetch_interval_seconds": 300,
