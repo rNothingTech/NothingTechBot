@@ -321,7 +321,7 @@ while True:
         # "thanks, this worked", "appreciate it, that worked", "you're the goat"
         # "you are the goat", "this was it", "that was the fix"
         # "thanks, that fixed it", "you're a lifesaver, this fixed it"
-        if any(re.search(pattern, body) for pattern in solved_detected_patterns) and comment.author == comment.submission.author:
+        if comment.author == comment.submission.author and any(re.search(pattern, body) for pattern in solved_detected_patterns):
           send_reply(comment, config_wiki['solved_detected'])
           
 
@@ -379,7 +379,7 @@ while True:
           logger.info("!support found, checking if quoted")
           if not is_command_quoted(body, "!support"):
             logger.info("not quoted, responding with support links")
-            response = f"u/{comment.parent().author.name}, here's how to get in touch with Nothing support:\n\n* Visit the [Nothing Support Centre](https://nothing.tech/pages/support-centre) and press[...]
+            response = f"u/{comment.parent().author.name},here's how to get in touch with Nothing support:\n\n* Visit the [Nothing Support Centre](https://nothing.tech/pages/support-centre) and press the blue chat icon for live chat support (region and time dependent).\n* Visit the [Nothing Customer Support](https://nothing.tech/pages/contact-support) page to get in contact via web form.\n* Contact [\@NothingSupport on X](https://x.com/NothingSupport).\n* Send a direct message to [u/nothing_support](https://reddit.com/u/nothing_support)."
             send_reply(comment, response)
 
         # check for !bug or !feedback in the body of a comment and respond with support links
