@@ -96,7 +96,8 @@ except Exception as e:
 commands_path = "commands.yaml"
 commands_data = {}
 commands_mtime = 0
-config_regex = config_parser['regex']
+with open("config_blank.json", "r", encoding="utf-8") as f:
+    config_regex = json.load(f)
 
 def fetch_yaml_from_github():
   while True:
@@ -332,10 +333,13 @@ while True:
         # "thanks, this worked", "appreciate it, that worked", "you're the goat"
         # "you are the goat", "this was it", "that was the fix"
         # "thanks, that fixed it", "you're a lifesaver, this fixed it"
-        solved_detected_patterns = config_regex['solved_detected_patterns'].split(',')
-        solved_detected_patterns = [pattern.strip() for pattern in solved_detected_patterns]
-        if any(re.search(pattern, body) for pattern in solved_detected_patterns) and comment.author == comment.submission.author:
-          send_reply(comment, config_wiki['solved_detected'])
+        solved_detected_patterns = config_regex["solved_detected_patterns"]
+
+        if (
+          any(re.search(pattern, body, re.IGNORECASE) for pattern in solved_detected_patterns)
+          and comment.author == comment.submission.author
+        ):
+            send_reply(comment, config_wiki["solved_detected"])
           
 
         # check for !answer in the body of a comment from OP or a mod of a submission, set solved flair and comment the solution
