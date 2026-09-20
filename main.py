@@ -172,7 +172,10 @@ def replace_device_codes(flair_text):
 def user_has_flair(subreddit, user):
   try:
     flair = subreddit.flair.get(user)
-    return bool(flair and flair.get('flair_text', '').strip())
+    flair_text = getattr(flair, 'flair_text', None)
+    if flair_text is None and isinstance(flair, dict):
+      flair_text = flair.get('flair_text', '')
+    return bool(flair_text and flair_text.strip())
   except Exception as e:
     logger.warning(f"Unable to read flair for {user}: {e}")
     return False
