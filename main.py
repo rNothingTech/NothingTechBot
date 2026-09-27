@@ -170,15 +170,16 @@ def replace_device_codes(flair_text):
   return re.sub(pattern, lambda match: devices[match.group(0).lower()], flair_text, flags=re.IGNORECASE)
 
 def user_has_flair(subreddit, user):
-  try:
-    flair = subreddit.flair.get(user)
-    flair_text = getattr(flair, 'flair_text', None)
-    if flair_text is None and isinstance(flair, dict):
-      flair_text = flair.get('flair_text', '')
-    return bool(flair_text and flair_text.strip())
-  except Exception as e:
-    logger.warning(f"Unable to read flair for {user}: {e}")
-    return False
+    try:
+        flair = next(subreddit.flair(redditor=user), None)
+        return bool(
+            flair
+            and getattr(flair, "flair_text", None)
+            and flair.flair_text.strip()
+        )
+    except Exception as e:
+        logger.warning(f"Unable to read flair for {user}: {e}")
+        return False
 
 def sanitise_command(argument):
   # remove words
