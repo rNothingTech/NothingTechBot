@@ -13,6 +13,7 @@ try:
     reddit_password = config['reddit_password']
     subreddit_names = config['subreddit'].replace(' ', '')
     solved_flair_template_ids = config['solved_flair_template_ids']
+    user_flair_template_ids = config['custom_user_flairs_id']
     # bot_config_wiki_page = config['bot_config_wiki_page']
     bool_send_response = config['bool_send_response']
     log_level_terminal = config['log_level_terminal']
@@ -380,6 +381,8 @@ while True:
             # if not, it sets the flair of the guy who summoned the bot
             is_mod = any(mod.name == comment.author.name for mod in subreddit_mods)
             flair_user = comment.parent().author if is_mod else comment.author
+            subreddit_name = comment.submission.subreddit.display_name
+            subreddit.flair.select(user_flair_template_ids.get(subreddit_name))
             subreddit.flair.set(flair_user, text=flair_text)
             send_reply(comment, config_wiki['flair_set_response' if is_mod else 'flair_mod_set_response'].replace('<flair>', flair_text))
 
