@@ -10,6 +10,10 @@
         "adbotest": "ba9d946a-e8e4-11ed-ad9e-7e7ed620b423",
         "CMSTech": "8ed93f98-67b1-11f0-9aa0-0e91e14f12ca"
     },
+    "custom_user_flairs_id": {
+        "adbotest": "36b831b2-bbf1-11f1-b87a-9aa13dffd827",
+        "CMSTech": "insert id here"
+    },
     "bot_config_wiki_page": "bot_config",
     
   "bot": {
