@@ -382,8 +382,12 @@ while True:
             is_mod = any(mod.name == comment.author.name for mod in subreddit_mods)
             flair_user = comment.parent().author if is_mod else comment.author
             subreddit_name = comment.submission.subreddit.display_name
-            subreddit.flair.select(user_flair_template_ids.get(subreddit_name))
-            subreddit.flair.set(flair_user, text=flair_text)
+            flair_template_id = user_flair_template_ids.get(subreddit_name)
+            subreddit.flair.set(
+              flair_user,
+              text=flair_text,
+              flair_template_id=flair_template_id
+            )
             send_reply(comment, config_wiki['flair_set_response' if is_mod else 'flair_mod_set_response'].replace('<flair>', flair_text))
 
         if not user_has_flair(subreddit, comment.author):
