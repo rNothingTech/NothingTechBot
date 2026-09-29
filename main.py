@@ -171,14 +171,60 @@ def replace_device_codes(flair_text):
 
 def user_has_flair(subreddit, user):
     try:
-        flair = next(subreddit.flair(redditor=user), None)
-        return bool(
-            flair
-            and getattr(flair, "flair_text", None)
-            and flair.flair_text.strip()
+        logger.debug(f"[FLAIR] Starting flair lookup for user={user!r}")
+
+        flair_result = subreddit.flair(redditor=user, limit=1)
+        logger.debug(f"[FLAIR] Got flair iterator for user={user!r}: {flair_result!r}")
+
+        flair_list = list(flair_result)
+        logger.debug(
+            f"[FLAIR] Result for user={user!r}: "
+            f"count={len(flair_list)}, data={flair_list!r}"
         )
+
+        if not flair_list:
+            logger.debug(f"[FLAIR] No flair found for user={user!r}")
+            return False
+
+        flair = flair_list[0]
+        logger.debug(f"[FLAIR] First flair for user={user!r}: {flair!r}")
+
+        if not isinstance(flair, dict):
+            logger.warning(
+                f"[FLAIR] Unexpected flair type for user={user!r}: "
+                f"{type(flair).__name__}"
+            )
+            return False
+
+        flair_text = flair.get("flair_text")
+        logger.debug(
+            f"[FLAIR] flair_text for user={user!r}: {flair_text!r}"
+        )
+
+        if flair_text is None:
+            logger.debug(f"[FLAIR] flair_text is None for user={user!r}")
+            return False
+
+        if not isinstance(flair_text, str):
+            logger.warning(
+                f"[FLAIR] Unexpected flair_text type for user={user!r}: "
+                f"{type(flair_text).__name__}: {flair_text!r}"
+            )
+            return False
+
+        has_flair = bool(flair_text.strip())
+
+        logger.debug(
+            f"[FLAIR] Final result for user={user!r}: "
+            f"has_flair={has_flair}"
+        )
+
+        return has_flair
+
     except Exception as e:
-        logger.warning(f"Unable to read flair for {user}: {e}")
+        logger.exception(
+            f"[FLAIR] Exception while checking flair for user={user!r}: {e}"
+        )
         return False
 
 def sanitise_command(argument):
