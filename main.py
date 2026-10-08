@@ -388,7 +388,7 @@ while True:
               text=flair_text,
               flair_template_id=flair_template_id
             )
-            send_reply(comment, config_wiki['flair_set_response' if is_mod else 'flair_mod_set_response'].replace('<flair>', flair_text))
+            send_reply(comment, config_wiki.get('flair_mod_set_response' if is_mod else 'flair_set_response', "Flair set to <flair>").replace('<flair>', flair_text).replace('<parent>', comment.parent().author.name if comment.parent().author else '[deleted]'))
 
         if not user_has_flair(subreddit, comment.author):
             detected_device = find_detected_device(body)
